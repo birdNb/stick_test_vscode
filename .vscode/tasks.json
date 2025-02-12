@@ -6,7 +6,10 @@
 			"label": "build",
 			"command": "E:/VSCODE_TOOL/mingw32/bin/make.exe",
 
-			"args": [],
+			"args": [
+				"-j",
+				"6"
+			],
 			"group": "build",
 		},
 		{

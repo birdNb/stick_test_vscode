@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 1
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 1
   28:Core/Src/spi.c **** SPI_HandleTypeDef hspi2;
   29:Core/Src/spi.c **** 
   30:Core/Src/spi.c **** /* SPI1 init function */
-ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 2
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s 			page 2
 
 
   31:Core/Src/spi.c **** void MX_SPI1_Init(void)
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 1
   66 0026 8361     		str	r3, [r0, #24]
   48:Core/Src/spi.c ****   hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16;
   67              		.loc 1 48 3 is_stmt 1 view .LVU15
-ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 3
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s 			page 3
 
 
   68              		.loc 1 48 32 is_stmt 0 view .LVU16
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 1
  106              	.L6:
  107 004a 00BF     		.align	2
  108              	.L5:
-ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 4
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s 			page 4
 
 
  109 004c 00000000 		.word	hspi1
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 1
  149              		.loc 1 79 3 is_stmt 1 view .LVU44
  150              		.loc 1 79 26 is_stmt 0 view .LVU45
  151 0018 0222     		movs	r2, #2
-ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 5
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s 			page 5
 
 
  152 001a 0261     		str	r2, [r0, #16]
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 1
   95:Core/Src/spi.c ****   /* USER CODE END SPI2_Init 2 */
   96:Core/Src/spi.c **** 
   97:Core/Src/spi.c **** }
-ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 6
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s 			page 6
 
 
  191              		.loc 1 97 1 view .LVU67
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 1
  240              		.loc 1 103 5 view .LVU76
  241 0012 254A     		ldr	r2, .L19
  242 0014 9342     		cmp	r3, r2
-ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 7
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s 			page 7
 
 
  243 0016 05D0     		beq	.L17
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 1
  150:Core/Src/spi.c ****   /* USER CODE END SPI2_MspInit 1 */
  151:Core/Src/spi.c ****   }
  152:Core/Src/spi.c **** }
-ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 8
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s 			page 8
 
 
  251              		.loc 1 152 1 view .LVU79
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 1
  116:Core/Src/spi.c ****     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
  293              		.loc 1 116 5 view .LVU92
  116:Core/Src/spi.c ****     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 9
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s 			page 9
 
 
  294              		.loc 1 116 25 is_stmt 0 view .LVU93
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 1
  133:Core/Src/spi.c **** 
  334              		.loc 1 133 5 view .LVU108
  335 007a 039A     		ldr	r2, [sp, #12]
-ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 10
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s 			page 10
 
 
  336              	.LBE4:
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 1
  373              	.LVL11:
  374              		.loc 1 152 1 view .LVU126
  375 00a4 BBE7     		b	.L13
-ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 11
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s 			page 11
 
 
  376              	.L20:
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 1
  172:Core/Src/spi.c **** 
  173:Core/Src/spi.c ****   /* USER CODE END SPI1_MspDeInit 1 */
  174:Core/Src/spi.c ****   }
-ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 12
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s 			page 12
 
 
  175:Core/Src/spi.c ****   else if(spiHandle->Instance==SPI2)
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 1
  443 0034 9365     		str	r3, [r2, #88]
  188:Core/Src/spi.c **** 
  444              		.loc 1 188 5 view .LVU139
-ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 13
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s 			page 13
 
 
  445 0036 4FF46041 		mov	r1, #57344
@@ -767,27 +767,27 @@ ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 1
  484              		.file 8 "Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_spi.h"
  485              		.file 9 "Core/Inc/spi.h"
  486              		.file 10 "Core/Inc/main.h"
-ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s 			page 14
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s 			page 14
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 spi.c
-C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s:21     .text.MX_SPI1_Init:00000000 $t
-C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s:27     .text.MX_SPI1_Init:00000000 MX_SPI1_Init
-C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s:109    .text.MX_SPI1_Init:0000004c $d
-C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s:474    .bss.hspi1:00000000 hspi1
-C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s:115    .text.MX_SPI2_Init:00000000 $t
-C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s:121    .text.MX_SPI2_Init:00000000 MX_SPI2_Init
-C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s:202    .text.MX_SPI2_Init:00000048 $d
-C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s:467    .bss.hspi2:00000000 hspi2
-C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s:208    .text.HAL_SPI_MspInit:00000000 $t
-C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s:214    .text.HAL_SPI_MspInit:00000000 HAL_SPI_MspInit
-C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s:379    .text.HAL_SPI_MspInit:000000a8 $d
-C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s:387    .text.HAL_SPI_MspDeInit:00000000 $t
-C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s:393    .text.HAL_SPI_MspDeInit:00000000 HAL_SPI_MspDeInit
-C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s:456    .text.HAL_SPI_MspDeInit:00000044 $d
-C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s:464    .bss.hspi2:00000000 $d
-C:\Users\BIRDs\AppData\Local\Temp\cc9KIDCS.s:471    .bss.hspi1:00000000 $d
+C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s:21     .text.MX_SPI1_Init:00000000 $t
+C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s:27     .text.MX_SPI1_Init:00000000 MX_SPI1_Init
+C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s:109    .text.MX_SPI1_Init:0000004c $d
+C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s:474    .bss.hspi1:00000000 hspi1
+C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s:115    .text.MX_SPI2_Init:00000000 $t
+C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s:121    .text.MX_SPI2_Init:00000000 MX_SPI2_Init
+C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s:202    .text.MX_SPI2_Init:00000048 $d
+C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s:467    .bss.hspi2:00000000 hspi2
+C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s:208    .text.HAL_SPI_MspInit:00000000 $t
+C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s:214    .text.HAL_SPI_MspInit:00000000 HAL_SPI_MspInit
+C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s:379    .text.HAL_SPI_MspInit:000000a8 $d
+C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s:387    .text.HAL_SPI_MspDeInit:00000000 $t
+C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s:393    .text.HAL_SPI_MspDeInit:00000000 HAL_SPI_MspDeInit
+C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s:456    .text.HAL_SPI_MspDeInit:00000044 $d
+C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s:464    .bss.hspi2:00000000 $d
+C:\Users\BIRDs\AppData\Local\Temp\ccYLPsh2.s:471    .bss.hspi1:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_SPI_Init

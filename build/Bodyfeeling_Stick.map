@@ -3231,40 +3231,40 @@ LOAD E:/VSCODE_TOOL/Arm_gnu/13.3 rel1/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/
  .debug_ranges  0x00001d08       0x88 build/port.o
  .debug_ranges  0x00001d90       0x20 build/startup_stm32g431xx.o
 
-.debug_line     0x00000000    0x1fbd4
- .debug_line    0x00000000      0x399 build/main.o
- .debug_line    0x00000399      0x205 build/gpio.o
- .debug_line    0x0000059e      0x223 build/app_freertos.o
- .debug_line    0x000007c1      0x481 build/adc.o
- .debug_line    0x00000c42      0x16b build/dma.o
- .debug_line    0x00000dad      0x3be build/spi.o
- .debug_line    0x0000116b      0x5c4 build/tim.o
- .debug_line    0x0000172f      0x5c4 build/usart.o
- .debug_line    0x00001cf3      0x2cd build/stm32g4xx_it.o
- .debug_line    0x00001fc0      0x18e build/stm32g4xx_hal_msp.o
- .debug_line    0x0000214e      0x2a1 build/stm32g4xx_hal_timebase_tim.o
- .debug_line    0x000023ef     0x230f build/stm32g4xx_hal_adc.o
- .debug_line    0x000046fe     0x1dca build/stm32g4xx_hal_adc_ex.o
- .debug_line    0x000064c8      0x6b1 build/stm32g4xx_hal.o
- .debug_line    0x00006b79      0xe71 build/stm32g4xx_hal_rcc.o
- .debug_line    0x000079ea      0xffe build/stm32g4xx_hal_rcc_ex.o
- .debug_line    0x000089e8      0x68c build/stm32g4xx_hal_gpio.o
- .debug_line    0x00009074      0xc1a build/stm32g4xx_hal_dma.o
- .debug_line    0x00009c8e      0xa14 build/stm32g4xx_hal_pwr_ex.o
- .debug_line    0x0000a6a2      0x7df build/stm32g4xx_hal_cortex.o
- .debug_line    0x0000ae81     0x2933 build/stm32g4xx_hal_spi.o
- .debug_line    0x0000d7b4     0x4d22 build/stm32g4xx_hal_tim.o
- .debug_line    0x000124d6     0x22b8 build/stm32g4xx_hal_tim_ex.o
- .debug_line    0x0001478e     0x4e60 build/stm32g4xx_hal_uart.o
- .debug_line    0x000195ee      0xa8a build/stm32g4xx_hal_uart_ex.o
- .debug_line    0x0001a078      0x220 build/system_stm32g4xx.o
- .debug_line    0x0001a298      0x335 build/list.o
- .debug_line    0x0001a5cd     0x175d build/queue.o
- .debug_line    0x0001bd2a     0x1f52 build/tasks.o
- .debug_line    0x0001dc7c     0x120e build/cmsis_os.o
- .debug_line    0x0001ee8a      0x6d3 build/heap_4.o
- .debug_line    0x0001f55d      0x603 build/port.o
- .debug_line    0x0001fb60       0x74 build/startup_stm32g431xx.o
+.debug_line     0x00000000    0x1fbd8
+ .debug_line    0x00000000      0x39d build/main.o
+ .debug_line    0x0000039d      0x205 build/gpio.o
+ .debug_line    0x000005a2      0x223 build/app_freertos.o
+ .debug_line    0x000007c5      0x481 build/adc.o
+ .debug_line    0x00000c46      0x16b build/dma.o
+ .debug_line    0x00000db1      0x3be build/spi.o
+ .debug_line    0x0000116f      0x5c4 build/tim.o
+ .debug_line    0x00001733      0x5c4 build/usart.o
+ .debug_line    0x00001cf7      0x2cd build/stm32g4xx_it.o
+ .debug_line    0x00001fc4      0x18e build/stm32g4xx_hal_msp.o
+ .debug_line    0x00002152      0x2a1 build/stm32g4xx_hal_timebase_tim.o
+ .debug_line    0x000023f3     0x230f build/stm32g4xx_hal_adc.o
+ .debug_line    0x00004702     0x1dca build/stm32g4xx_hal_adc_ex.o
+ .debug_line    0x000064cc      0x6b1 build/stm32g4xx_hal.o
+ .debug_line    0x00006b7d      0xe71 build/stm32g4xx_hal_rcc.o
+ .debug_line    0x000079ee      0xffe build/stm32g4xx_hal_rcc_ex.o
+ .debug_line    0x000089ec      0x68c build/stm32g4xx_hal_gpio.o
+ .debug_line    0x00009078      0xc1a build/stm32g4xx_hal_dma.o
+ .debug_line    0x00009c92      0xa14 build/stm32g4xx_hal_pwr_ex.o
+ .debug_line    0x0000a6a6      0x7df build/stm32g4xx_hal_cortex.o
+ .debug_line    0x0000ae85     0x2933 build/stm32g4xx_hal_spi.o
+ .debug_line    0x0000d7b8     0x4d22 build/stm32g4xx_hal_tim.o
+ .debug_line    0x000124da     0x22b8 build/stm32g4xx_hal_tim_ex.o
+ .debug_line    0x00014792     0x4e60 build/stm32g4xx_hal_uart.o
+ .debug_line    0x000195f2      0xa8a build/stm32g4xx_hal_uart_ex.o
+ .debug_line    0x0001a07c      0x220 build/system_stm32g4xx.o
+ .debug_line    0x0001a29c      0x335 build/list.o
+ .debug_line    0x0001a5d1     0x175d build/queue.o
+ .debug_line    0x0001bd2e     0x1f52 build/tasks.o
+ .debug_line    0x0001dc80     0x120e build/cmsis_os.o
+ .debug_line    0x0001ee8e      0x6d3 build/heap_4.o
+ .debug_line    0x0001f561      0x603 build/port.o
+ .debug_line    0x0001fb64       0x74 build/startup_stm32g431xx.o
 
 .debug_str      0x00000000     0x8cb8
  .debug_str     0x00000000     0x8cb8 build/main.o

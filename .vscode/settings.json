@@ -1,3 +1,8 @@
 {
-    "makefile.configureOnOpen": true
+    "makefile.configureOnOpen": true,
+    "files.associations": {
+        "freertos.h": "c",
+        "cmsis_os.h": "c",
+        "main.h": "c"
+    }
 }
