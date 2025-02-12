@@ -1,0 +1,27 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "build",
+			"command": "E:/VSCODE_TOOL/mingw32/bin/make.exe",
+
+			"args": [],
+			"group": "build",
+		},
+		{
+			"label": "download",
+			"type": "shell",
+			"command": "E:/VSCODE_TOOL/OpenOCD-20240916-0.12.0/bin/openocd.exe",
+			"args": [
+				"-f",
+				"E:/VSCODE_TOOL/OpenOCD-20240916-0.12.0/share/openocd/scripts/interface/cmsis-dap.cfg",
+				"-f",
+				"E:/VSCODE_TOOL/OpenOCD-20240916-0.12.0/share/openocd/scripts/target/stm32g4x.cfg",
+				"-c",
+				"program build/Bodyfeeling_Stick.elf verify reset exit"
+			],
+			"group": "build"
+		}
+	]
+}

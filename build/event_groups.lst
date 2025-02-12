@@ -1,0 +1,2733 @@
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"event_groups.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "Middlewares/Third_Party/FreeRTOS/Source/event_groups.c"
+  20              		.section	.text.prvTestWaitCondition,"ax",%progbits
+  21              		.align	1
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	prvTestWaitCondition:
+  27              	.LVL0:
+  28              	.LFB14:
+   1:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*
+   2:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  * FreeRTOS Kernel V10.3.1
+   3:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+   4:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  *
+   5:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  * Permission is hereby granted, free of charge, to any person obtaining a copy of
+   6:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  * this software and associated documentation files (the "Software"), to deal in
+   7:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  * the Software without restriction, including without limitation the rights to
+   8:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+   9:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  * the Software, and to permit persons to whom the Software is furnished to do so,
+  10:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  * subject to the following conditions:
+  11:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  *
+  12:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  * The above copyright notice and this permission notice shall be included in all
+  13:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  * copies or substantial portions of the Software.
+  14:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  *
+  15:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  16:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+  17:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+  18:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+  19:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  20:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  21:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  *
+  22:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  * http://www.FreeRTOS.org
+  23:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  * http://aws.amazon.com/freertos
+  24:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  *
+  25:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  * 1 tab == 4 spaces!
+  26:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  */
+  27:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+  28:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /* Standard includes. */
+  29:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** #include <stdlib.h>
+  30:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 2
+
+
+  31:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /* Defining MPU_WRAPPERS_INCLUDED_FROM_API_FILE prevents task.h from redefining
+  32:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** all the API functions to use the MPU wrappers.  That should only be done when
+  33:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** task.h is included from an application file. */
+  34:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** #define MPU_WRAPPERS_INCLUDED_FROM_API_FILE
+  35:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+  36:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /* FreeRTOS includes. */
+  37:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** #include "FreeRTOS.h"
+  38:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** #include "task.h"
+  39:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** #include "timers.h"
+  40:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** #include "event_groups.h"
+  41:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+  42:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /* Lint e961, e750 and e9021 are suppressed as a MISRA exception justified
+  43:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** because the MPU ports require MPU_WRAPPERS_INCLUDED_FROM_API_FILE to be defined
+  44:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** for the header files above, but not in this file, in order to generate the
+  45:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** correct privileged Vs unprivileged linkage and placement. */
+  46:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** #undef MPU_WRAPPERS_INCLUDED_FROM_API_FILE /*lint !e961 !e750 !e9021 See comment above. */
+  47:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+  48:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /* The following bit fields convey control information in a task's event list
+  49:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** item value.  It is important they don't clash with the
+  50:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** taskEVENT_LIST_ITEM_VALUE_IN_USE definition. */
+  51:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** #if configUSE_16_BIT_TICKS == 1
+  52:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#define eventCLEAR_EVENTS_ON_EXIT_BIT	0x0100U
+  53:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#define eventUNBLOCKED_DUE_TO_BIT_SET	0x0200U
+  54:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#define eventWAIT_FOR_ALL_BITS			0x0400U
+  55:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#define eventEVENT_BITS_CONTROL_BYTES	0xff00U
+  56:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** #else
+  57:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#define eventCLEAR_EVENTS_ON_EXIT_BIT	0x01000000UL
+  58:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#define eventUNBLOCKED_DUE_TO_BIT_SET	0x02000000UL
+  59:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#define eventWAIT_FOR_ALL_BITS			0x04000000UL
+  60:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#define eventEVENT_BITS_CONTROL_BYTES	0xff000000UL
+  61:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** #endif
+  62:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+  63:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** typedef struct EventGroupDef_t
+  64:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** {
+  65:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	EventBits_t uxEventBits;
+  66:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	List_t xTasksWaitingForBits;		/*< List of tasks waiting for a bit to be set. */
+  67:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+  68:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#if( configUSE_TRACE_FACILITY == 1 )
+  69:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		UBaseType_t uxEventGroupNumber;
+  70:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#endif
+  71:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+  72:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#if( ( configSUPPORT_STATIC_ALLOCATION == 1 ) && ( configSUPPORT_DYNAMIC_ALLOCATION == 1 ) )
+  73:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		uint8_t ucStaticallyAllocated; /*< Set to pdTRUE if the event group is statically allocated to en
+  74:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#endif
+  75:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** } EventGroup_t;
+  76:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+  77:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*-----------------------------------------------------------*/
+  78:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+  79:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*
+  80:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  * Test the bits set in uxCurrentEventBits to see if the wait condition is met.
+  81:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  * The wait condition is defined by xWaitForAllBits.  If xWaitForAllBits is
+  82:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  * pdTRUE then the wait condition is met if all the bits set in uxBitsToWaitFor
+  83:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  * are also set in uxCurrentEventBits.  If xWaitForAllBits is pdFALSE then the
+  84:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  * wait condition is met if any of the bits set in uxBitsToWait for are also set
+  85:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  * in uxCurrentEventBits.
+  86:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c ****  */
+  87:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** static BaseType_t prvTestWaitCondition( const EventBits_t uxCurrentEventBits, const EventBits_t uxB
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 3
+
+
+  88:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+  89:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*-----------------------------------------------------------*/
+  90:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+  91:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** #if( configSUPPORT_STATIC_ALLOCATION == 1 )
+  92:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+  93:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	EventGroupHandle_t xEventGroupCreateStatic( StaticEventGroup_t *pxEventGroupBuffer )
+  94:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	{
+  95:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	EventGroup_t *pxEventBits;
+  96:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+  97:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		/* A StaticEventGroup_t object must be provided. */
+  98:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		configASSERT( pxEventGroupBuffer );
+  99:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 100:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		#if( configASSERT_DEFINED == 1 )
+ 101:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 102:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			/* Sanity check that the size of the structure used to declare a
+ 103:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			variable of type StaticEventGroup_t equals the size of the real
+ 104:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			event group structure. */
+ 105:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			volatile size_t xSize = sizeof( StaticEventGroup_t );
+ 106:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			configASSERT( xSize == sizeof( EventGroup_t ) );
+ 107:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		} /*lint !e529 xSize is referenced if configASSERT() is defined. */
+ 108:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		#endif /* configASSERT_DEFINED */
+ 109:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 110:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		/* The user has provided a statically allocated event group - use it. */
+ 111:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		pxEventBits = ( EventGroup_t * ) pxEventGroupBuffer; /*lint !e740 !e9087 EventGroup_t and StaticE
+ 112:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 113:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		if( pxEventBits != NULL )
+ 114:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 115:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			pxEventBits->uxEventBits = 0;
+ 116:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			vListInitialise( &( pxEventBits->xTasksWaitingForBits ) );
+ 117:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 118:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			#if( configSUPPORT_DYNAMIC_ALLOCATION == 1 )
+ 119:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 120:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				/* Both static and dynamic allocation can be used, so note that
+ 121:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				this event group was created statically in case the event group
+ 122:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				is later deleted. */
+ 123:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				pxEventBits->ucStaticallyAllocated = pdTRUE;
+ 124:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 125:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			#endif /* configSUPPORT_DYNAMIC_ALLOCATION */
+ 126:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 127:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			traceEVENT_GROUP_CREATE( pxEventBits );
+ 128:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 129:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		else
+ 130:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 131:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			/* xEventGroupCreateStatic should only ever be called with
+ 132:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			pxEventGroupBuffer pointing to a pre-allocated (compile time
+ 133:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			allocated) StaticEventGroup_t variable. */
+ 134:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			traceEVENT_GROUP_CREATE_FAILED();
+ 135:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 136:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 137:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		return pxEventBits;
+ 138:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 139:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 140:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** #endif /* configSUPPORT_STATIC_ALLOCATION */
+ 141:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*-----------------------------------------------------------*/
+ 142:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 143:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** #if( configSUPPORT_DYNAMIC_ALLOCATION == 1 )
+ 144:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 4
+
+
+ 145:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	EventGroupHandle_t xEventGroupCreate( void )
+ 146:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	{
+ 147:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	EventGroup_t *pxEventBits;
+ 148:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 149:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		/* Allocate the event group.  Justification for MISRA deviation as
+ 150:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		follows:  pvPortMalloc() always ensures returned memory blocks are
+ 151:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		aligned per the requirements of the MCU stack.  In this case
+ 152:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		pvPortMalloc() must return a pointer that is guaranteed to meet the
+ 153:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		alignment requirements of the EventGroup_t structure - which (if you
+ 154:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		follow it through) is the alignment requirements of the TickType_t type
+ 155:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		(EventBits_t being of TickType_t itself).  Therefore, whenever the
+ 156:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		stack alignment requirements are greater than or equal to the
+ 157:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		TickType_t alignment requirements the cast is safe.  In other cases,
+ 158:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		where the natural word size of the architecture is less than
+ 159:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		sizeof( TickType_t ), the TickType_t variables will be accessed in two
+ 160:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		or more reads operations, and the alignment requirements is only that
+ 161:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		of each individual read. */
+ 162:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		pxEventBits = ( EventGroup_t * ) pvPortMalloc( sizeof( EventGroup_t ) ); /*lint !e9087 !e9079 see
+ 163:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 164:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		if( pxEventBits != NULL )
+ 165:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 166:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			pxEventBits->uxEventBits = 0;
+ 167:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			vListInitialise( &( pxEventBits->xTasksWaitingForBits ) );
+ 168:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 169:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			#if( configSUPPORT_STATIC_ALLOCATION == 1 )
+ 170:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 171:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				/* Both static and dynamic allocation can be used, so note this
+ 172:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				event group was allocated statically in case the event group is
+ 173:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				later deleted. */
+ 174:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				pxEventBits->ucStaticallyAllocated = pdFALSE;
+ 175:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 176:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			#endif /* configSUPPORT_STATIC_ALLOCATION */
+ 177:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 178:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			traceEVENT_GROUP_CREATE( pxEventBits );
+ 179:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 180:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		else
+ 181:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 182:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			traceEVENT_GROUP_CREATE_FAILED(); /*lint !e9063 Else branch only exists to allow tracing and doe
+ 183:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 184:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 185:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		return pxEventBits;
+ 186:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 187:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 188:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** #endif /* configSUPPORT_DYNAMIC_ALLOCATION */
+ 189:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*-----------------------------------------------------------*/
+ 190:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 191:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventBits_t xEventGroupSync( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToSet, const E
+ 192:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** {
+ 193:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventBits_t uxOriginalBitValue, uxReturn;
+ 194:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventGroup_t *pxEventBits = xEventGroup;
+ 195:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** BaseType_t xAlreadyYielded;
+ 196:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** BaseType_t xTimeoutOccurred = pdFALSE;
+ 197:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 198:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( ( uxBitsToWaitFor & eventEVENT_BITS_CONTROL_BYTES ) == 0 );
+ 199:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( uxBitsToWaitFor != 0 );
+ 200:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#if ( ( INCLUDE_xTaskGetSchedulerState == 1 ) || ( configUSE_TIMERS == 1 ) )
+ 201:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	{
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 5
+
+
+ 202:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		configASSERT( !( ( xTaskGetSchedulerState() == taskSCHEDULER_SUSPENDED ) && ( xTicksToWait != 0 )
+ 203:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 204:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#endif
+ 205:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 206:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	vTaskSuspendAll();
+ 207:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	{
+ 208:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		uxOriginalBitValue = pxEventBits->uxEventBits;
+ 209:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 210:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		( void ) xEventGroupSetBits( xEventGroup, uxBitsToSet );
+ 211:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 212:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		if( ( ( uxOriginalBitValue | uxBitsToSet ) & uxBitsToWaitFor ) == uxBitsToWaitFor )
+ 213:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 214:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			/* All the rendezvous bits are now set - no need to block. */
+ 215:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			uxReturn = ( uxOriginalBitValue | uxBitsToSet );
+ 216:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 217:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			/* Rendezvous always clear the bits.  They will have been cleared
+ 218:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			already unless this is the only task in the rendezvous. */
+ 219:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			pxEventBits->uxEventBits &= ~uxBitsToWaitFor;
+ 220:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 221:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			xTicksToWait = 0;
+ 222:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 223:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		else
+ 224:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 225:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			if( xTicksToWait != ( TickType_t ) 0 )
+ 226:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 227:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				traceEVENT_GROUP_SYNC_BLOCK( xEventGroup, uxBitsToSet, uxBitsToWaitFor );
+ 228:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 229:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				/* Store the bits that the calling task is waiting for in the
+ 230:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				task's event list item so the kernel knows when a match is
+ 231:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				found.  Then enter the blocked state. */
+ 232:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				vTaskPlaceOnUnorderedEventList( &( pxEventBits->xTasksWaitingForBits ), ( uxBitsToWaitFor | eve
+ 233:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 234:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				/* This assignment is obsolete as uxReturn will get set after
+ 235:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				the task unblocks, but some compilers mistakenly generate a
+ 236:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				warning about uxReturn being returned without being set if the
+ 237:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				assignment is omitted. */
+ 238:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				uxReturn = 0;
+ 239:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 240:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			else
+ 241:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 242:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				/* The rendezvous bits were not set, but no block time was
+ 243:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				specified - just return the current event bit value. */
+ 244:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				uxReturn = pxEventBits->uxEventBits;
+ 245:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				xTimeoutOccurred = pdTRUE;
+ 246:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 247:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 248:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 249:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	xAlreadyYielded = xTaskResumeAll();
+ 250:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 251:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	if( xTicksToWait != ( TickType_t ) 0 )
+ 252:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	{
+ 253:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		if( xAlreadyYielded == pdFALSE )
+ 254:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 255:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			portYIELD_WITHIN_API();
+ 256:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 257:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		else
+ 258:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 6
+
+
+ 259:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			mtCOVERAGE_TEST_MARKER();
+ 260:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 261:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 262:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		/* The task blocked to wait for its required bits to be set - at this
+ 263:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		point either the required bits were set or the block time expired.  If
+ 264:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		the required bits were set they will have been stored in the task's
+ 265:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		event list item, and they should now be retrieved then cleared. */
+ 266:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		uxReturn = uxTaskResetEventItemValue();
+ 267:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 268:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		if( ( uxReturn & eventUNBLOCKED_DUE_TO_BIT_SET ) == ( EventBits_t ) 0 )
+ 269:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 270:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			/* The task timed out, just return the current event bit value. */
+ 271:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			taskENTER_CRITICAL();
+ 272:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 273:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				uxReturn = pxEventBits->uxEventBits;
+ 274:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 275:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				/* Although the task got here because it timed out before the
+ 276:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				bits it was waiting for were set, it is possible that since it
+ 277:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				unblocked another task has set the bits.  If this is the case
+ 278:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				then it needs to clear the bits before exiting. */
+ 279:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				if( ( uxReturn & uxBitsToWaitFor ) == uxBitsToWaitFor )
+ 280:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				{
+ 281:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 					pxEventBits->uxEventBits &= ~uxBitsToWaitFor;
+ 282:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				}
+ 283:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				else
+ 284:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				{
+ 285:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 					mtCOVERAGE_TEST_MARKER();
+ 286:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				}
+ 287:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 288:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			taskEXIT_CRITICAL();
+ 289:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 290:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			xTimeoutOccurred = pdTRUE;
+ 291:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 292:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		else
+ 293:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 294:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			/* The task unblocked because the bits were set. */
+ 295:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 296:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 297:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		/* Control bits might be set as the task had blocked should not be
+ 298:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		returned. */
+ 299:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		uxReturn &= ~eventEVENT_BITS_CONTROL_BYTES;
+ 300:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 301:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 302:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	traceEVENT_GROUP_SYNC_END( xEventGroup, uxBitsToSet, uxBitsToWaitFor, xTimeoutOccurred );
+ 303:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 304:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	/* Prevent compiler warnings when trace macros are not used. */
+ 305:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	( void ) xTimeoutOccurred;
+ 306:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 307:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	return uxReturn;
+ 308:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** }
+ 309:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*-----------------------------------------------------------*/
+ 310:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 311:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventBits_t xEventGroupWaitBits( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToWaitFor,
+ 312:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** {
+ 313:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventGroup_t *pxEventBits = xEventGroup;
+ 314:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventBits_t uxReturn, uxControlBits = 0;
+ 315:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** BaseType_t xWaitConditionMet, xAlreadyYielded;
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 7
+
+
+ 316:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** BaseType_t xTimeoutOccurred = pdFALSE;
+ 317:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 318:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	/* Check the user is not attempting to wait on the bits used by the kernel
+ 319:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	itself, and that at least one bit is being requested. */
+ 320:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( xEventGroup );
+ 321:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( ( uxBitsToWaitFor & eventEVENT_BITS_CONTROL_BYTES ) == 0 );
+ 322:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( uxBitsToWaitFor != 0 );
+ 323:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#if ( ( INCLUDE_xTaskGetSchedulerState == 1 ) || ( configUSE_TIMERS == 1 ) )
+ 324:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	{
+ 325:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		configASSERT( !( ( xTaskGetSchedulerState() == taskSCHEDULER_SUSPENDED ) && ( xTicksToWait != 0 )
+ 326:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 327:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#endif
+ 328:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 329:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	vTaskSuspendAll();
+ 330:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	{
+ 331:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		const EventBits_t uxCurrentEventBits = pxEventBits->uxEventBits;
+ 332:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 333:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		/* Check to see if the wait condition is already met or not. */
+ 334:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		xWaitConditionMet = prvTestWaitCondition( uxCurrentEventBits, uxBitsToWaitFor, xWaitForAllBits );
+ 335:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 336:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		if( xWaitConditionMet != pdFALSE )
+ 337:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 338:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			/* The wait condition has already been met so there is no need to
+ 339:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			block. */
+ 340:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			uxReturn = uxCurrentEventBits;
+ 341:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			xTicksToWait = ( TickType_t ) 0;
+ 342:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 343:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			/* Clear the wait bits if requested to do so. */
+ 344:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			if( xClearOnExit != pdFALSE )
+ 345:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 346:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				pxEventBits->uxEventBits &= ~uxBitsToWaitFor;
+ 347:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 348:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			else
+ 349:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 350:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				mtCOVERAGE_TEST_MARKER();
+ 351:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 352:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 353:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		else if( xTicksToWait == ( TickType_t ) 0 )
+ 354:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 355:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			/* The wait condition has not been met, but no block time was
+ 356:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			specified, so just return the current value. */
+ 357:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			uxReturn = uxCurrentEventBits;
+ 358:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			xTimeoutOccurred = pdTRUE;
+ 359:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 360:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		else
+ 361:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 362:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			/* The task is going to block to wait for its required bits to be
+ 363:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			set.  uxControlBits are used to remember the specified behaviour of
+ 364:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			this call to xEventGroupWaitBits() - for use when the event bits
+ 365:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			unblock the task. */
+ 366:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			if( xClearOnExit != pdFALSE )
+ 367:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 368:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				uxControlBits |= eventCLEAR_EVENTS_ON_EXIT_BIT;
+ 369:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 370:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			else
+ 371:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 372:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				mtCOVERAGE_TEST_MARKER();
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 8
+
+
+ 373:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 374:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 375:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			if( xWaitForAllBits != pdFALSE )
+ 376:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 377:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				uxControlBits |= eventWAIT_FOR_ALL_BITS;
+ 378:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 379:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			else
+ 380:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 381:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				mtCOVERAGE_TEST_MARKER();
+ 382:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 383:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 384:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			/* Store the bits that the calling task is waiting for in the
+ 385:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			task's event list item so the kernel knows when a match is
+ 386:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			found.  Then enter the blocked state. */
+ 387:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			vTaskPlaceOnUnorderedEventList( &( pxEventBits->xTasksWaitingForBits ), ( uxBitsToWaitFor | uxCo
+ 388:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 389:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			/* This is obsolete as it will get set after the task unblocks, but
+ 390:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			some compilers mistakenly generate a warning about the variable
+ 391:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			being returned without being set if it is not done. */
+ 392:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			uxReturn = 0;
+ 393:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 394:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			traceEVENT_GROUP_WAIT_BITS_BLOCK( xEventGroup, uxBitsToWaitFor );
+ 395:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 396:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 397:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	xAlreadyYielded = xTaskResumeAll();
+ 398:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 399:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	if( xTicksToWait != ( TickType_t ) 0 )
+ 400:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	{
+ 401:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		if( xAlreadyYielded == pdFALSE )
+ 402:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 403:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			portYIELD_WITHIN_API();
+ 404:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 405:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		else
+ 406:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 407:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			mtCOVERAGE_TEST_MARKER();
+ 408:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 409:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 410:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		/* The task blocked to wait for its required bits to be set - at this
+ 411:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		point either the required bits were set or the block time expired.  If
+ 412:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		the required bits were set they will have been stored in the task's
+ 413:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		event list item, and they should now be retrieved then cleared. */
+ 414:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		uxReturn = uxTaskResetEventItemValue();
+ 415:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 416:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		if( ( uxReturn & eventUNBLOCKED_DUE_TO_BIT_SET ) == ( EventBits_t ) 0 )
+ 417:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 418:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			taskENTER_CRITICAL();
+ 419:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 420:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				/* The task timed out, just return the current event bit value. */
+ 421:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				uxReturn = pxEventBits->uxEventBits;
+ 422:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 423:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				/* It is possible that the event bits were updated between this
+ 424:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				task leaving the Blocked state and running again. */
+ 425:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				if( prvTestWaitCondition( uxReturn, uxBitsToWaitFor, xWaitForAllBits ) != pdFALSE )
+ 426:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				{
+ 427:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 					if( xClearOnExit != pdFALSE )
+ 428:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 					{
+ 429:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 						pxEventBits->uxEventBits &= ~uxBitsToWaitFor;
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 9
+
+
+ 430:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 					}
+ 431:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 					else
+ 432:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 					{
+ 433:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 						mtCOVERAGE_TEST_MARKER();
+ 434:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 					}
+ 435:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				}
+ 436:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				else
+ 437:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				{
+ 438:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 					mtCOVERAGE_TEST_MARKER();
+ 439:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				}
+ 440:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				xTimeoutOccurred = pdTRUE;
+ 441:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 442:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			taskEXIT_CRITICAL();
+ 443:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 444:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		else
+ 445:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 446:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			/* The task unblocked because the bits were set. */
+ 447:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 448:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 449:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		/* The task blocked so control bits may have been set. */
+ 450:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		uxReturn &= ~eventEVENT_BITS_CONTROL_BYTES;
+ 451:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 452:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	traceEVENT_GROUP_WAIT_BITS_END( xEventGroup, uxBitsToWaitFor, xTimeoutOccurred );
+ 453:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 454:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	/* Prevent compiler warnings when trace macros are not used. */
+ 455:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	( void ) xTimeoutOccurred;
+ 456:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 457:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	return uxReturn;
+ 458:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** }
+ 459:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*-----------------------------------------------------------*/
+ 460:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 461:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventBits_t xEventGroupClearBits( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToClear )
+ 462:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** {
+ 463:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventGroup_t *pxEventBits = xEventGroup;
+ 464:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventBits_t uxReturn;
+ 465:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 466:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	/* Check the user is not attempting to clear the bits used by the kernel
+ 467:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	itself. */
+ 468:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( xEventGroup );
+ 469:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( ( uxBitsToClear & eventEVENT_BITS_CONTROL_BYTES ) == 0 );
+ 470:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 471:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	taskENTER_CRITICAL();
+ 472:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	{
+ 473:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		traceEVENT_GROUP_CLEAR_BITS( xEventGroup, uxBitsToClear );
+ 474:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 475:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		/* The value returned is the event group value prior to the bits being
+ 476:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		cleared. */
+ 477:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		uxReturn = pxEventBits->uxEventBits;
+ 478:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 479:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		/* Clear the bits. */
+ 480:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		pxEventBits->uxEventBits &= ~uxBitsToClear;
+ 481:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 482:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	taskEXIT_CRITICAL();
+ 483:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 484:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	return uxReturn;
+ 485:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** }
+ 486:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*-----------------------------------------------------------*/
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 10
+
+
+ 487:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 488:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** #if ( ( configUSE_TRACE_FACILITY == 1 ) && ( INCLUDE_xTimerPendFunctionCall == 1 ) && ( configUSE_T
+ 489:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 490:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	BaseType_t xEventGroupClearBitsFromISR( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsTo
+ 491:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	{
+ 492:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		BaseType_t xReturn;
+ 493:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 494:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		traceEVENT_GROUP_CLEAR_BITS_FROM_ISR( xEventGroup, uxBitsToClear );
+ 495:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		xReturn = xTimerPendFunctionCallFromISR( vEventGroupClearBitsCallback, ( void * ) xEventGroup, ( 
+ 496:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 497:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		return xReturn;
+ 498:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 499:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 500:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** #endif
+ 501:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*-----------------------------------------------------------*/
+ 502:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 503:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventBits_t xEventGroupGetBitsFromISR( EventGroupHandle_t xEventGroup )
+ 504:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** {
+ 505:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** UBaseType_t uxSavedInterruptStatus;
+ 506:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventGroup_t const * const pxEventBits = xEventGroup;
+ 507:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventBits_t uxReturn;
+ 508:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 509:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	uxSavedInterruptStatus = portSET_INTERRUPT_MASK_FROM_ISR();
+ 510:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	{
+ 511:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		uxReturn = pxEventBits->uxEventBits;
+ 512:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 513:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	portCLEAR_INTERRUPT_MASK_FROM_ISR( uxSavedInterruptStatus );
+ 514:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 515:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	return uxReturn;
+ 516:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** } /*lint !e818 EventGroupHandle_t is a typedef used in other functions to so can't be pointer to co
+ 517:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*-----------------------------------------------------------*/
+ 518:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 519:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventBits_t xEventGroupSetBits( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToSet )
+ 520:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** {
+ 521:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** ListItem_t *pxListItem, *pxNext;
+ 522:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** ListItem_t const *pxListEnd;
+ 523:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** List_t const * pxList;
+ 524:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventBits_t uxBitsToClear = 0, uxBitsWaitedFor, uxControlBits;
+ 525:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventGroup_t *pxEventBits = xEventGroup;
+ 526:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** BaseType_t xMatchFound = pdFALSE;
+ 527:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 528:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	/* Check the user is not attempting to set the bits used by the kernel
+ 529:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	itself. */
+ 530:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( xEventGroup );
+ 531:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( ( uxBitsToSet & eventEVENT_BITS_CONTROL_BYTES ) == 0 );
+ 532:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 533:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	pxList = &( pxEventBits->xTasksWaitingForBits );
+ 534:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	pxListEnd = listGET_END_MARKER( pxList ); /*lint !e826 !e740 !e9087 The mini list structure is use
+ 535:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	vTaskSuspendAll();
+ 536:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	{
+ 537:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		traceEVENT_GROUP_SET_BITS( xEventGroup, uxBitsToSet );
+ 538:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 539:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		pxListItem = listGET_HEAD_ENTRY( pxList );
+ 540:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 541:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		/* Set the bits. */
+ 542:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		pxEventBits->uxEventBits |= uxBitsToSet;
+ 543:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 11
+
+
+ 544:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		/* See if the new bit value should unblock any tasks. */
+ 545:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		while( pxListItem != pxListEnd )
+ 546:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 547:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			pxNext = listGET_NEXT( pxListItem );
+ 548:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			uxBitsWaitedFor = listGET_LIST_ITEM_VALUE( pxListItem );
+ 549:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			xMatchFound = pdFALSE;
+ 550:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 551:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			/* Split the bits waited for from the control bits. */
+ 552:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			uxControlBits = uxBitsWaitedFor & eventEVENT_BITS_CONTROL_BYTES;
+ 553:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			uxBitsWaitedFor &= ~eventEVENT_BITS_CONTROL_BYTES;
+ 554:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 555:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			if( ( uxControlBits & eventWAIT_FOR_ALL_BITS ) == ( EventBits_t ) 0 )
+ 556:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 557:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				/* Just looking for single bit being set. */
+ 558:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				if( ( uxBitsWaitedFor & pxEventBits->uxEventBits ) != ( EventBits_t ) 0 )
+ 559:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				{
+ 560:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 					xMatchFound = pdTRUE;
+ 561:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				}
+ 562:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				else
+ 563:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				{
+ 564:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 					mtCOVERAGE_TEST_MARKER();
+ 565:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				}
+ 566:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 567:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			else if( ( uxBitsWaitedFor & pxEventBits->uxEventBits ) == uxBitsWaitedFor )
+ 568:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 569:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				/* All bits are set. */
+ 570:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				xMatchFound = pdTRUE;
+ 571:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 572:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			else
+ 573:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 574:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				/* Need all bits to be set, but not all the bits were set. */
+ 575:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 576:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 577:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			if( xMatchFound != pdFALSE )
+ 578:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 579:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				/* The bits match.  Should the bits be cleared on exit? */
+ 580:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				if( ( uxControlBits & eventCLEAR_EVENTS_ON_EXIT_BIT ) != ( EventBits_t ) 0 )
+ 581:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				{
+ 582:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 					uxBitsToClear |= uxBitsWaitedFor;
+ 583:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				}
+ 584:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				else
+ 585:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				{
+ 586:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 					mtCOVERAGE_TEST_MARKER();
+ 587:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				}
+ 588:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 589:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				/* Store the actual event flag value in the task's event list
+ 590:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				item before removing the task from the event list.  The
+ 591:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				eventUNBLOCKED_DUE_TO_BIT_SET bit is set so the task knows
+ 592:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				that is was unblocked due to its required bits matching, rather
+ 593:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				than because it timed out. */
+ 594:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				vTaskRemoveFromUnorderedEventList( pxListItem, pxEventBits->uxEventBits | eventUNBLOCKED_DUE_TO
+ 595:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 596:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 597:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			/* Move onto the next list item.  Note pxListItem->pxNext is not
+ 598:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			used here as the list item may have been removed from the event list
+ 599:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			and inserted into the ready/pending reading list. */
+ 600:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			pxListItem = pxNext;
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 12
+
+
+ 601:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 602:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 603:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		/* Clear any bits that matched when the eventCLEAR_EVENTS_ON_EXIT_BIT
+ 604:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		bit was set in the control word. */
+ 605:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		pxEventBits->uxEventBits &= ~uxBitsToClear;
+ 606:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 607:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	( void ) xTaskResumeAll();
+ 608:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 609:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	return pxEventBits->uxEventBits;
+ 610:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** }
+ 611:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*-----------------------------------------------------------*/
+ 612:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 613:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** void vEventGroupDelete( EventGroupHandle_t xEventGroup )
+ 614:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** {
+ 615:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventGroup_t *pxEventBits = xEventGroup;
+ 616:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** const List_t *pxTasksWaitingForBits = &( pxEventBits->xTasksWaitingForBits );
+ 617:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 618:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	vTaskSuspendAll();
+ 619:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	{
+ 620:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		traceEVENT_GROUP_DELETE( xEventGroup );
+ 621:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 622:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		while( listCURRENT_LIST_LENGTH( pxTasksWaitingForBits ) > ( UBaseType_t ) 0 )
+ 623:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 624:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			/* Unblock the task, returning 0 as the event list is being deleted
+ 625:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			and cannot therefore have any bits set. */
+ 626:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			configASSERT( pxTasksWaitingForBits->xListEnd.pxNext != ( const ListItem_t * ) &( pxTasksWaiting
+ 627:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			vTaskRemoveFromUnorderedEventList( pxTasksWaitingForBits->xListEnd.pxNext, eventUNBLOCKED_DUE_TO
+ 628:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 629:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 630:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		#if( ( configSUPPORT_DYNAMIC_ALLOCATION == 1 ) && ( configSUPPORT_STATIC_ALLOCATION == 0 ) )
+ 631:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 632:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			/* The event group can only have been allocated dynamically - free
+ 633:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			it again. */
+ 634:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			vPortFree( pxEventBits );
+ 635:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 636:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		#elif( ( configSUPPORT_DYNAMIC_ALLOCATION == 1 ) && ( configSUPPORT_STATIC_ALLOCATION == 1 ) )
+ 637:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 638:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			/* The event group could have been allocated statically or
+ 639:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			dynamically, so check before attempting to free the memory. */
+ 640:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			if( pxEventBits->ucStaticallyAllocated == ( uint8_t ) pdFALSE )
+ 641:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 642:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				vPortFree( pxEventBits );
+ 643:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 644:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			else
+ 645:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 646:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				mtCOVERAGE_TEST_MARKER();
+ 647:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 648:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 649:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		#endif /* configSUPPORT_DYNAMIC_ALLOCATION */
+ 650:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 651:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	( void ) xTaskResumeAll();
+ 652:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** }
+ 653:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*-----------------------------------------------------------*/
+ 654:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 655:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /* For internal use only - execute a 'set bits' command that was pended from
+ 656:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** an interrupt. */
+ 657:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** void vEventGroupSetBitsCallback( void *pvEventGroup, const uint32_t ulBitsToSet )
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 13
+
+
+ 658:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** {
+ 659:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	( void ) xEventGroupSetBits( pvEventGroup, ( EventBits_t ) ulBitsToSet ); /*lint !e9079 Can't avoi
+ 660:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** }
+ 661:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*-----------------------------------------------------------*/
+ 662:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 663:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /* For internal use only - execute a 'clear bits' command that was pended from
+ 664:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** an interrupt. */
+ 665:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** void vEventGroupClearBitsCallback( void *pvEventGroup, const uint32_t ulBitsToClear )
+ 666:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** {
+ 667:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	( void ) xEventGroupClearBits( pvEventGroup, ( EventBits_t ) ulBitsToClear ); /*lint !e9079 Can't 
+ 668:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** }
+ 669:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*-----------------------------------------------------------*/
+ 670:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 671:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** static BaseType_t prvTestWaitCondition( const EventBits_t uxCurrentEventBits, const EventBits_t uxB
+ 672:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** {
+  29              		.loc 1 672 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+ 673:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** BaseType_t xWaitConditionMet = pdFALSE;
+  34              		.loc 1 673 1 view .LVU1
+ 674:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 675:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	if( xWaitForAllBits == pdFALSE )
+  35              		.loc 1 675 2 view .LVU2
+  36              		.loc 1 675 4 is_stmt 0 view .LVU3
+  37 0000 1AB9     		cbnz	r2, .L2
+ 676:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	{
+ 677:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		/* Task only has to wait for one bit within uxBitsToWaitFor to be
+ 678:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		set.  Is one already set? */
+ 679:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		if( ( uxCurrentEventBits & uxBitsToWaitFor ) != ( EventBits_t ) 0 )
+  38              		.loc 1 679 3 is_stmt 1 view .LVU4
+  39              		.loc 1 679 5 is_stmt 0 view .LVU5
+  40 0002 0842     		tst	r0, r1
+  41 0004 05D1     		bne	.L4
+ 673:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+  42              		.loc 1 673 12 view .LVU6
+  43 0006 1046     		mov	r0, r2
+  44              	.LVL1:
+ 673:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+  45              		.loc 1 673 12 view .LVU7
+  46 0008 7047     		bx	lr
+  47              	.LVL2:
+  48              	.L2:
+ 680:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 681:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			xWaitConditionMet = pdTRUE;
+ 682:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 683:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		else
+ 684:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 685:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			mtCOVERAGE_TEST_MARKER();
+ 686:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 687:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 688:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	else
+ 689:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	{
+ 690:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		/* Task has to wait for all the bits in uxBitsToWaitFor to be set.
+ 691:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		Are they set already? */
+ 692:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		if( ( uxCurrentEventBits & uxBitsToWaitFor ) == uxBitsToWaitFor )
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 14
+
+
+  49              		.loc 1 692 3 is_stmt 1 view .LVU8
+  50              		.loc 1 692 5 is_stmt 0 view .LVU9
+  51 000a 8143     		bics	r1, r1, r0
+  52              	.LVL3:
+  53              		.loc 1 692 5 view .LVU10
+  54 000c 03D0     		beq	.L5
+ 673:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+  55              		.loc 1 673 12 view .LVU11
+  56 000e 0020     		movs	r0, #0
+  57              	.LVL4:
+ 673:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+  58              		.loc 1 673 12 view .LVU12
+  59 0010 7047     		bx	lr
+  60              	.LVL5:
+  61              	.L4:
+ 681:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+  62              		.loc 1 681 22 view .LVU13
+  63 0012 0120     		movs	r0, #1
+  64              	.LVL6:
+ 681:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+  65              		.loc 1 681 22 view .LVU14
+  66 0014 7047     		bx	lr
+  67              	.LVL7:
+  68              	.L5:
+ 693:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 694:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			xWaitConditionMet = pdTRUE;
+  69              		.loc 1 694 22 view .LVU15
+  70 0016 0120     		movs	r0, #1
+  71              	.LVL8:
+ 695:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 696:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		else
+ 697:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 698:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			mtCOVERAGE_TEST_MARKER();
+  72              		.loc 1 698 28 is_stmt 1 view .LVU16
+ 699:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 700:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 701:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 702:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	return xWaitConditionMet;
+  73              		.loc 1 702 2 view .LVU17
+ 703:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** }
+  74              		.loc 1 703 1 is_stmt 0 view .LVU18
+  75 0018 7047     		bx	lr
+  76              		.cfi_endproc
+  77              	.LFE14:
+  79              		.section	.text.xEventGroupCreate,"ax",%progbits
+  80              		.align	1
+  81              		.global	xEventGroupCreate
+  82              		.syntax unified
+  83              		.thumb
+  84              		.thumb_func
+  86              	xEventGroupCreate:
+  87              	.LFB5:
+ 146:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	EventGroup_t *pxEventBits;
+  88              		.loc 1 146 2 is_stmt 1 view -0
+  89              		.cfi_startproc
+  90              		@ args = 0, pretend = 0, frame = 0
+  91              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 15
+
+
+  92 0000 10B5     		push	{r4, lr}
+  93              	.LCFI0:
+  94              		.cfi_def_cfa_offset 8
+  95              		.cfi_offset 4, -8
+  96              		.cfi_offset 14, -4
+ 147:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+  97              		.loc 1 147 2 view .LVU20
+ 162:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+  98              		.loc 1 162 3 view .LVU21
+ 162:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+  99              		.loc 1 162 36 is_stmt 0 view .LVU22
+ 100 0002 1820     		movs	r0, #24
+ 101 0004 FFF7FEFF 		bl	pvPortMalloc
+ 102              	.LVL9:
+ 164:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 103              		.loc 1 164 3 is_stmt 1 view .LVU23
+ 164:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 104              		.loc 1 164 5 is_stmt 0 view .LVU24
+ 105 0008 0446     		mov	r4, r0
+ 106 000a 20B1     		cbz	r0, .L6
+ 166:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			vListInitialise( &( pxEventBits->xTasksWaitingForBits ) );
+ 107              		.loc 1 166 4 is_stmt 1 view .LVU25
+ 166:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			vListInitialise( &( pxEventBits->xTasksWaitingForBits ) );
+ 108              		.loc 1 166 29 is_stmt 0 view .LVU26
+ 109 000c 0023     		movs	r3, #0
+ 110 000e 40F8043B 		str	r3, [r0], #4
+ 111              	.LVL10:
+ 167:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 112              		.loc 1 167 4 is_stmt 1 view .LVU27
+ 113 0012 FFF7FEFF 		bl	vListInitialise
+ 114              	.LVL11:
+ 178:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 115              		.loc 1 178 42 view .LVU28
+ 182:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 116              		.loc 1 182 36 view .LVU29
+ 185:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 117              		.loc 1 185 3 view .LVU30
+ 118              	.L6:
+ 186:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 119              		.loc 1 186 2 is_stmt 0 view .LVU31
+ 120 0016 2046     		mov	r0, r4
+ 121 0018 10BD     		pop	{r4, pc}
+ 186:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 122              		.loc 1 186 2 view .LVU32
+ 123              		.cfi_endproc
+ 124              	.LFE5:
+ 126              		.section	.text.xEventGroupWaitBits,"ax",%progbits
+ 127              		.align	1
+ 128              		.global	xEventGroupWaitBits
+ 129              		.syntax unified
+ 130              		.thumb
+ 131              		.thumb_func
+ 133              	xEventGroupWaitBits:
+ 134              	.LVL12:
+ 135              	.LFB7:
+ 312:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventGroup_t *pxEventBits = xEventGroup;
+ 136              		.loc 1 312 1 is_stmt 1 view -0
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 16
+
+
+ 137              		.cfi_startproc
+ 138              		@ args = 4, pretend = 0, frame = 0
+ 139              		@ frame_needed = 0, uses_anonymous_args = 0
+ 313:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventBits_t uxReturn, uxControlBits = 0;
+ 140              		.loc 1 313 1 view .LVU34
+ 314:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** BaseType_t xWaitConditionMet, xAlreadyYielded;
+ 141              		.loc 1 314 1 view .LVU35
+ 315:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** BaseType_t xTimeoutOccurred = pdFALSE;
+ 142              		.loc 1 315 1 view .LVU36
+ 316:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 143              		.loc 1 316 1 view .LVU37
+ 320:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( ( uxBitsToWaitFor & eventEVENT_BITS_CONTROL_BYTES ) == 0 );
+ 144              		.loc 1 320 2 view .LVU38
+ 145 0000 88B1     		cbz	r0, .L30
+ 312:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventGroup_t *pxEventBits = xEventGroup;
+ 146              		.loc 1 312 1 is_stmt 0 view .LVU39
+ 147 0002 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 148              	.LCFI1:
+ 149              		.cfi_def_cfa_offset 24
+ 150              		.cfi_offset 4, -24
+ 151              		.cfi_offset 5, -20
+ 152              		.cfi_offset 6, -16
+ 153              		.cfi_offset 7, -12
+ 154              		.cfi_offset 8, -8
+ 155              		.cfi_offset 14, -4
+ 156 0006 0C46     		mov	r4, r1
+ 157 0008 1646     		mov	r6, r2
+ 158 000a 1D46     		mov	r5, r3
+ 159 000c 0746     		mov	r7, r0
+ 320:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( ( uxBitsToWaitFor & eventEVENT_BITS_CONTROL_BYTES ) == 0 );
+ 160              		.loc 1 320 29 is_stmt 1 discriminator 2 view .LVU40
+ 321:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( uxBitsToWaitFor != 0 );
+ 161              		.loc 1 321 2 view .LVU41
+ 162 000e B1F1807F 		cmp	r1, #16777216
+ 163 0012 11D3     		bcc	.L12
+ 321:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( uxBitsToWaitFor != 0 );
+ 164              		.loc 1 321 2 discriminator 1 view .LVU42
+ 165              	.LBB31:
+ 166              	.LBI31:
+ 167              		.file 2 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h"
+   1:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** /*
+   2:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  * FreeRTOS Kernel V10.3.1
+   3:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+   4:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  *
+   5:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  * Permission is hereby granted, free of charge, to any person obtaining a copy of
+   6:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  * this software and associated documentation files (the "Software"), to deal in
+   7:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  * the Software without restriction, including without limitation the rights to
+   8:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+   9:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  * the Software, and to permit persons to whom the Software is furnished to do so,
+  10:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  * subject to the following conditions:
+  11:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  *
+  12:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  * The above copyright notice and this permission notice shall be included in all
+  13:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  * copies or substantial portions of the Software.
+  14:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  *
+  15:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  16:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+  17:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 17
+
+
+  18:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+  19:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  20:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  21:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  *
+  22:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  * http://www.FreeRTOS.org
+  23:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  * http://aws.amazon.com/freertos
+  24:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  *
+  25:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  * 1 tab == 4 spaces!
+  26:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  */
+  27:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+  28:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+  29:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #ifndef PORTMACRO_H
+  30:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define PORTMACRO_H
+  31:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+  32:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #ifdef __cplusplus
+  33:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** extern "C" {
+  34:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #endif
+  35:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+  36:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** /*-----------------------------------------------------------
+  37:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  * Port specific definitions.
+  38:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  *
+  39:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  * The settings in this file configure FreeRTOS correctly for the
+  40:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  * given hardware and compiler.
+  41:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  *
+  42:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  * These settings should not be altered.
+  43:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  *-----------------------------------------------------------
+  44:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h ****  */
+  45:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+  46:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** /* Type definitions. */
+  47:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define portCHAR		char
+  48:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define portFLOAT		float
+  49:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define portDOUBLE		double
+  50:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define portLONG		long
+  51:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define portSHORT		short
+  52:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define portSTACK_TYPE	uint32_t
+  53:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define portBASE_TYPE	long
+  54:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+  55:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** typedef portSTACK_TYPE StackType_t;
+  56:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** typedef long BaseType_t;
+  57:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** typedef unsigned long UBaseType_t;
+  58:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+  59:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #if( configUSE_16_BIT_TICKS == 1 )
+  60:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	typedef uint16_t TickType_t;
+  61:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	#define portMAX_DELAY ( TickType_t ) 0xffff
+  62:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #else
+  63:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	typedef uint32_t TickType_t;
+  64:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	#define portMAX_DELAY ( TickType_t ) 0xffffffffUL
+  65:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+  66:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	/* 32-bit tick type on a 32-bit architecture, so reads of the tick count do
+  67:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	not need to be guarded with a critical section. */
+  68:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	#define portTICK_TYPE_IS_ATOMIC 1
+  69:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #endif
+  70:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** /*-----------------------------------------------------------*/
+  71:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+  72:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** /* Architecture specifics. */
+  73:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define portSTACK_GROWTH			( -1 )
+  74:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define portTICK_PERIOD_MS			( ( TickType_t ) 1000 / configTICK_RATE_HZ )
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 18
+
+
+  75:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define portBYTE_ALIGNMENT			8
+  76:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** /*-----------------------------------------------------------*/
+  77:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+  78:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** /* Scheduler utilities. */
+  79:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define portYIELD() 															\
+  80:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** {																				\
+  81:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	/* Set a PendSV to request a context switch. */								\
+  82:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	portNVIC_INT_CTRL_REG = portNVIC_PENDSVSET_BIT;								\
+  83:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 																				\
+  84:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	/* Barriers are normally not required but do ensure the code is completely	\
+  85:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	within the specified behaviour for the architecture. */						\
+  86:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	__asm volatile( "dsb" ::: "memory" );										\
+  87:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	__asm volatile( "isb" );													\
+  88:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** }
+  89:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+  90:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define portNVIC_INT_CTRL_REG		( * ( ( volatile uint32_t * ) 0xe000ed04 ) )
+  91:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define portNVIC_PENDSVSET_BIT		( 1UL << 28UL )
+  92:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define portEND_SWITCHING_ISR( xSwitchRequired ) if( xSwitchRequired != pdFALSE ) portYIELD()
+  93:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define portYIELD_FROM_ISR( x ) portEND_SWITCHING_ISR( x )
+  94:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** /*-----------------------------------------------------------*/
+  95:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+  96:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** /* Critical section management. */
+  97:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** extern void vPortEnterCritical( void );
+  98:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** extern void vPortExitCritical( void );
+  99:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define portSET_INTERRUPT_MASK_FROM_ISR()		ulPortRaiseBASEPRI()
+ 100:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define portCLEAR_INTERRUPT_MASK_FROM_ISR(x)	vPortSetBASEPRI(x)
+ 101:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define portDISABLE_INTERRUPTS()				vPortRaiseBASEPRI()
+ 102:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define portENABLE_INTERRUPTS()					vPortSetBASEPRI(0)
+ 103:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define portENTER_CRITICAL()					vPortEnterCritical()
+ 104:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define portEXIT_CRITICAL()						vPortExitCritical()
+ 105:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 106:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** /*-----------------------------------------------------------*/
+ 107:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 108:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** /* Task function macros as described on the FreeRTOS.org WEB site.  These are
+ 109:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** not necessary for to use this port.  They are defined so the common demo files
+ 110:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** (which build with all the ports) will build. */
+ 111:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define portTASK_FUNCTION_PROTO( vFunction, pvParameters ) void vFunction( void *pvParameters )
+ 112:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define portTASK_FUNCTION( vFunction, pvParameters ) void vFunction( void *pvParameters )
+ 113:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** /*-----------------------------------------------------------*/
+ 114:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 115:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** /* Tickless idle/low power functionality. */
+ 116:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #ifndef portSUPPRESS_TICKS_AND_SLEEP
+ 117:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	extern void vPortSuppressTicksAndSleep( TickType_t xExpectedIdleTime );
+ 118:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	#define portSUPPRESS_TICKS_AND_SLEEP( xExpectedIdleTime ) vPortSuppressTicksAndSleep( xExpectedIdl
+ 119:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #endif
+ 120:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** /*-----------------------------------------------------------*/
+ 121:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 122:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** /* Architecture specific optimisations. */
+ 123:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #ifndef configUSE_PORT_OPTIMISED_TASK_SELECTION
+ 124:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	#define configUSE_PORT_OPTIMISED_TASK_SELECTION 1
+ 125:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #endif
+ 126:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 127:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #if configUSE_PORT_OPTIMISED_TASK_SELECTION == 1
+ 128:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 129:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	/* Generic helper function. */
+ 130:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	__attribute__( ( always_inline ) ) static inline uint8_t ucPortCountLeadingZeros( uint32_t ulBitma
+ 131:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	{
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 19
+
+
+ 132:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	uint8_t ucReturn;
+ 133:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 134:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 		__asm volatile ( "clz %0, %1" : "=r" ( ucReturn ) : "r" ( ulBitmap ) : "memory" );
+ 135:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 		return ucReturn;
+ 136:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	}
+ 137:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 138:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	/* Check the configuration. */
+ 139:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	#if( configMAX_PRIORITIES > 32 )
+ 140:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 		#error configUSE_PORT_OPTIMISED_TASK_SELECTION can only be set to 1 when configMAX_PRIORITIES is 
+ 141:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	#endif
+ 142:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 143:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	/* Store/clear the ready priorities in a bit map. */
+ 144:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	#define portRECORD_READY_PRIORITY( uxPriority, uxReadyPriorities ) ( uxReadyPriorities ) |= ( 1UL 
+ 145:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	#define portRESET_READY_PRIORITY( uxPriority, uxReadyPriorities ) ( uxReadyPriorities ) &= ~( 1UL 
+ 146:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 147:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	/*-----------------------------------------------------------*/
+ 148:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 149:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	#define portGET_HIGHEST_PRIORITY( uxTopPriority, uxReadyPriorities ) uxTopPriority = ( 31UL - ( ui
+ 150:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 151:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #endif /* configUSE_PORT_OPTIMISED_TASK_SELECTION */
+ 152:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 153:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** /*-----------------------------------------------------------*/
+ 154:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 155:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #ifdef configASSERT
+ 156:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	void vPortValidateInterruptPriority( void );
+ 157:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	#define portASSERT_IF_INTERRUPT_PRIORITY_INVALID() 	vPortValidateInterruptPriority()
+ 158:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #endif
+ 159:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 160:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** /* portNOP() is not required by this port. */
+ 161:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define portNOP()
+ 162:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 163:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #define portINLINE	__inline
+ 164:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 165:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #ifndef portFORCE_INLINE
+ 166:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	#define portFORCE_INLINE inline __attribute__(( always_inline))
+ 167:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** #endif
+ 168:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 169:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** portFORCE_INLINE static BaseType_t xPortIsInsideInterrupt( void )
+ 170:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** {
+ 171:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** uint32_t ulCurrentInterrupt;
+ 172:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** BaseType_t xReturn;
+ 173:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 174:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	/* Obtain the number of the currently executing interrupt. */
+ 175:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	__asm volatile( "mrs %0, ipsr" : "=r"( ulCurrentInterrupt ) :: "memory" );
+ 176:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 177:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	if( ulCurrentInterrupt == 0 )
+ 178:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	{
+ 179:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 		xReturn = pdFALSE;
+ 180:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	}
+ 181:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	else
+ 182:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	{
+ 183:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 		xReturn = pdTRUE;
+ 184:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	}
+ 185:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 186:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	return xReturn;
+ 187:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** }
+ 188:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 20
+
+
+ 189:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** /*-----------------------------------------------------------*/
+ 190:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 191:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** portFORCE_INLINE static void vPortRaiseBASEPRI( void )
+ 168              		.loc 2 191 30 view .LVU43
+ 169              	.LBB32:
+ 192:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** {
+ 193:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** uint32_t ulNewBASEPRI;
+ 170              		.loc 2 193 1 view .LVU44
+ 194:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 195:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	__asm volatile
+ 171              		.loc 2 195 2 view .LVU45
+ 172              		.syntax unified
+ 173              	@ 195 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h" 1
+ 174 0014 4FF05003 			mov r3, #80												
+ 175 0018 83F31188 		msr basepri, r3											
+ 176 001c BFF36F8F 		isb														
+ 177 0020 BFF34F8F 		dsb														
+ 178              	
+ 179              	@ 0 "" 2
+ 180              	.LVL13:
+ 181              		.thumb
+ 182              		.syntax unified
+ 183              	.L13:
+ 184              		.loc 2 195 2 is_stmt 0 view .LVU46
+ 185              	.LBE32:
+ 186              	.LBE31:
+ 321:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( uxBitsToWaitFor != 0 );
+ 187              		.loc 1 321 2 is_stmt 1 discriminator 3 view .LVU47
+ 321:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( uxBitsToWaitFor != 0 );
+ 188              		.loc 1 321 2 discriminator 3 view .LVU48
+ 189 0024 FEE7     		b	.L13
+ 190              	.LVL14:
+ 191              	.L30:
+ 192              	.LCFI2:
+ 193              		.cfi_def_cfa_offset 0
+ 194              		.cfi_restore 4
+ 195              		.cfi_restore 5
+ 196              		.cfi_restore 6
+ 197              		.cfi_restore 7
+ 198              		.cfi_restore 8
+ 199              		.cfi_restore 14
+ 320:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( ( uxBitsToWaitFor & eventEVENT_BITS_CONTROL_BYTES ) == 0 );
+ 200              		.loc 1 320 2 discriminator 1 view .LVU49
+ 201              	.LBB33:
+ 202              	.LBI33:
+ 191:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** {
+ 203              		.loc 2 191 30 view .LVU50
+ 204              	.LBB34:
+ 193:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 205              		.loc 2 193 1 view .LVU51
+ 206              		.loc 2 195 2 view .LVU52
+ 207              		.syntax unified
+ 208              	@ 195 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h" 1
+ 209 0026 4FF05003 			mov r3, #80												
+ 210 002a 83F31188 		msr basepri, r3											
+ 211 002e BFF36F8F 		isb														
+ 212 0032 BFF34F8F 		dsb														
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 21
+
+
+ 213              	
+ 214              	@ 0 "" 2
+ 215              	.LVL15:
+ 216              		.thumb
+ 217              		.syntax unified
+ 218              	.L11:
+ 219              		.loc 2 195 2 is_stmt 0 view .LVU53
+ 220              	.LBE34:
+ 221              	.LBE33:
+ 320:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( ( uxBitsToWaitFor & eventEVENT_BITS_CONTROL_BYTES ) == 0 );
+ 222              		.loc 1 320 2 is_stmt 1 discriminator 3 view .LVU54
+ 320:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( ( uxBitsToWaitFor & eventEVENT_BITS_CONTROL_BYTES ) == 0 );
+ 223              		.loc 1 320 2 discriminator 3 view .LVU55
+ 224 0036 FEE7     		b	.L11
+ 225              	.LVL16:
+ 226              	.L12:
+ 227              	.LCFI3:
+ 228              		.cfi_def_cfa_offset 24
+ 229              		.cfi_offset 4, -24
+ 230              		.cfi_offset 5, -20
+ 231              		.cfi_offset 6, -16
+ 232              		.cfi_offset 7, -12
+ 233              		.cfi_offset 8, -8
+ 234              		.cfi_offset 14, -4
+ 321:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( uxBitsToWaitFor != 0 );
+ 235              		.loc 1 321 74 discriminator 2 view .LVU56
+ 322:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#if ( ( INCLUDE_xTaskGetSchedulerState == 1 ) || ( configUSE_TIMERS == 1 ) )
+ 236              		.loc 1 322 2 view .LVU57
+ 237 0038 41B9     		cbnz	r1, .L14
+ 322:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#if ( ( INCLUDE_xTaskGetSchedulerState == 1 ) || ( configUSE_TIMERS == 1 ) )
+ 238              		.loc 1 322 2 discriminator 1 view .LVU58
+ 239              	.LBB35:
+ 240              	.LBI35:
+ 191:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** {
+ 241              		.loc 2 191 30 view .LVU59
+ 242              	.LBB36:
+ 193:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 243              		.loc 2 193 1 view .LVU60
+ 244              		.loc 2 195 2 view .LVU61
+ 245              		.syntax unified
+ 246              	@ 195 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h" 1
+ 247 003a 4FF05003 			mov r3, #80												
+ 248 003e 83F31188 		msr basepri, r3											
+ 249 0042 BFF36F8F 		isb														
+ 250 0046 BFF34F8F 		dsb														
+ 251              	
+ 252              	@ 0 "" 2
+ 253              	.LVL17:
+ 254              		.thumb
+ 255              		.syntax unified
+ 256              	.L15:
+ 257              		.loc 2 195 2 is_stmt 0 view .LVU62
+ 258              	.LBE36:
+ 259              	.LBE35:
+ 322:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#if ( ( INCLUDE_xTaskGetSchedulerState == 1 ) || ( configUSE_TIMERS == 1 ) )
+ 260              		.loc 1 322 2 is_stmt 1 discriminator 3 view .LVU63
+ 322:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#if ( ( INCLUDE_xTaskGetSchedulerState == 1 ) || ( configUSE_TIMERS == 1 ) )
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 22
+
+
+ 261              		.loc 1 322 2 discriminator 3 view .LVU64
+ 262 004a FEE7     		b	.L15
+ 263              	.LVL18:
+ 264              	.L14:
+ 322:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#if ( ( INCLUDE_xTaskGetSchedulerState == 1 ) || ( configUSE_TIMERS == 1 ) )
+ 265              		.loc 1 322 38 discriminator 2 view .LVU65
+ 325:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 266              		.loc 1 325 3 view .LVU66
+ 267 004c FFF7FEFF 		bl	xTaskGetSchedulerState
+ 268              	.LVL19:
+ 325:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 269              		.loc 1 325 3 is_stmt 0 discriminator 1 view .LVU67
+ 270 0050 50B9     		cbnz	r0, .L16
+ 325:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 271              		.loc 1 325 3 discriminator 2 view .LVU68
+ 272 0052 069B     		ldr	r3, [sp, #24]
+ 273 0054 43B1     		cbz	r3, .L16
+ 325:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 274              		.loc 1 325 3 is_stmt 1 discriminator 7 view .LVU69
+ 275              	.LBB37:
+ 276              	.LBI37:
+ 191:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** {
+ 277              		.loc 2 191 30 view .LVU70
+ 278              	.LBB38:
+ 193:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 279              		.loc 2 193 1 view .LVU71
+ 280              		.loc 2 195 2 view .LVU72
+ 281              		.syntax unified
+ 282              	@ 195 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h" 1
+ 283 0056 4FF05003 			mov r3, #80												
+ 284 005a 83F31188 		msr basepri, r3											
+ 285 005e BFF36F8F 		isb														
+ 286 0062 BFF34F8F 		dsb														
+ 287              	
+ 288              	@ 0 "" 2
+ 289              		.thumb
+ 290              		.syntax unified
+ 291              	.L17:
+ 292              	.LBE38:
+ 293              	.LBE37:
+ 325:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 294              		.loc 1 325 3 discriminator 9 view .LVU73
+ 325:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 295              		.loc 1 325 3 discriminator 9 view .LVU74
+ 296 0066 FEE7     		b	.L17
+ 297              	.L16:
+ 325:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 298              		.loc 1 325 104 discriminator 8 view .LVU75
+ 329:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	{
+ 299              		.loc 1 329 2 view .LVU76
+ 300 0068 FFF7FEFF 		bl	vTaskSuspendAll
+ 301              	.LVL20:
+ 302              	.LBB39:
+ 331:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 303              		.loc 1 331 3 view .LVU77
+ 331:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 304              		.loc 1 331 21 is_stmt 0 view .LVU78
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 23
+
+
+ 305 006c D7F80080 		ldr	r8, [r7]
+ 306              	.LVL21:
+ 334:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 307              		.loc 1 334 3 is_stmt 1 view .LVU79
+ 334:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 308              		.loc 1 334 23 is_stmt 0 view .LVU80
+ 309 0070 2A46     		mov	r2, r5
+ 310 0072 2146     		mov	r1, r4
+ 311 0074 4046     		mov	r0, r8
+ 312 0076 FFF7FEFF 		bl	prvTestWaitCondition
+ 313              	.LVL22:
+ 336:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 314              		.loc 1 336 3 is_stmt 1 view .LVU81
+ 336:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 315              		.loc 1 336 5 is_stmt 0 view .LVU82
+ 316 007a F8B1     		cbz	r0, .L18
+ 340:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			xTicksToWait = ( TickType_t ) 0;
+ 317              		.loc 1 340 4 is_stmt 1 view .LVU83
+ 318              	.LVL23:
+ 341:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 319              		.loc 1 341 4 view .LVU84
+ 344:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 320              		.loc 1 344 4 view .LVU85
+ 344:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 321              		.loc 1 344 6 is_stmt 0 view .LVU86
+ 322 007c 8EB3     		cbz	r6, .L26
+ 346:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 323              		.loc 1 346 5 is_stmt 1 view .LVU87
+ 346:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 324              		.loc 1 346 30 is_stmt 0 view .LVU88
+ 325 007e 28EA0403 		bic	r3, r8, r4
+ 326 0082 3B60     		str	r3, [r7]
+ 341:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 327              		.loc 1 341 17 view .LVU89
+ 328 0084 0023     		movs	r3, #0
+ 329 0086 0693     		str	r3, [sp, #24]
+ 330              	.LVL24:
+ 331              	.L19:
+ 394:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 332              		.loc 1 394 68 is_stmt 1 view .LVU90
+ 333              	.LBE39:
+ 397:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 334              		.loc 1 397 2 view .LVU91
+ 397:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 335              		.loc 1 397 20 is_stmt 0 view .LVU92
+ 336 0088 FFF7FEFF 		bl	xTaskResumeAll
+ 337              	.LVL25:
+ 399:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	{
+ 338              		.loc 1 399 2 is_stmt 1 view .LVU93
+ 399:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	{
+ 339              		.loc 1 399 4 is_stmt 0 view .LVU94
+ 340 008c 069B     		ldr	r3, [sp, #24]
+ 341 008e 93B1     		cbz	r3, .L9
+ 401:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 342              		.loc 1 401 3 is_stmt 1 view .LVU95
+ 401:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 343              		.loc 1 401 5 is_stmt 0 view .LVU96
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 24
+
+
+ 344 0090 48B9     		cbnz	r0, .L23
+ 403:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 345              		.loc 1 403 4 is_stmt 1 view .LVU97
+ 346 0092 4FF0E023 		mov	r3, #-536813568
+ 347 0096 4FF08052 		mov	r2, #268435456
+ 348 009a C3F8042D 		str	r2, [r3, #3332]
+ 349              	.LVL26:
+ 403:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 350              		.loc 1 403 4 view .LVU98
+ 351              		.syntax unified
+ 352              	@ 403 "Middlewares/Third_Party/FreeRTOS/Source/event_groups.c" 1
+ 353 009e BFF34F8F 		dsb
+ 354              	@ 0 "" 2
+ 403:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 355              		.loc 1 403 4 view .LVU99
+ 356              	@ 403 "Middlewares/Third_Party/FreeRTOS/Source/event_groups.c" 1
+ 357 00a2 BFF36F8F 		isb
+ 358              	@ 0 "" 2
+ 403:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 359              		.loc 1 403 26 view .LVU100
+ 360              		.thumb
+ 361              		.syntax unified
+ 362              	.L23:
+ 407:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 363              		.loc 1 407 28 view .LVU101
+ 414:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 364              		.loc 1 414 3 view .LVU102
+ 414:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 365              		.loc 1 414 14 is_stmt 0 view .LVU103
+ 366 00a6 FFF7FEFF 		bl	uxTaskResetEventItemValue
+ 367              	.LVL27:
+ 414:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 368              		.loc 1 414 14 view .LVU104
+ 369 00aa 8046     		mov	r8, r0
+ 370              	.LVL28:
+ 416:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 371              		.loc 1 416 3 is_stmt 1 view .LVU105
+ 416:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 372              		.loc 1 416 5 is_stmt 0 view .LVU106
+ 373 00ac 10F0007F 		tst	r0, #33554432
+ 374 00b0 1AD0     		beq	.L31
+ 375              	.LVL29:
+ 376              	.L24:
+ 447:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 377              		.loc 1 447 3 is_stmt 1 view .LVU107
+ 450:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 378              		.loc 1 450 3 view .LVU108
+ 450:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 379              		.loc 1 450 12 is_stmt 0 view .LVU109
+ 380 00b2 28F07F48 		bic	r8, r8, #-16777216
+ 381              	.LVL30:
+ 452:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 382              		.loc 1 452 2 is_stmt 1 view .LVU110
+ 455:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 383              		.loc 1 455 2 view .LVU111
+ 457:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** }
+ 384              		.loc 1 457 2 view .LVU112
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 25
+
+
+ 385              	.L9:
+ 458:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*-----------------------------------------------------------*/
+ 386              		.loc 1 458 1 is_stmt 0 view .LVU113
+ 387 00b6 4046     		mov	r0, r8
+ 388 00b8 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 389              	.LVL31:
+ 390              	.L18:
+ 391              	.LBB40:
+ 353:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 392              		.loc 1 353 8 is_stmt 1 view .LVU114
+ 353:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 393              		.loc 1 353 10 is_stmt 0 view .LVU115
+ 394 00bc 069B     		ldr	r3, [sp, #24]
+ 395 00be 002B     		cmp	r3, #0
+ 396 00c0 E2D0     		beq	.L19
+ 366:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 397              		.loc 1 366 4 is_stmt 1 view .LVU116
+ 366:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 398              		.loc 1 366 6 is_stmt 0 view .LVU117
+ 399 00c2 5EB9     		cbnz	r6, .L27
+ 400              	.LBE40:
+ 314:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** BaseType_t xWaitConditionMet, xAlreadyYielded;
+ 401              		.loc 1 314 23 view .LVU118
+ 402 00c4 0021     		movs	r1, #0
+ 403              	.L20:
+ 404              	.LVL32:
+ 405              	.LBB41:
+ 372:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 406              		.loc 1 372 29 is_stmt 1 view .LVU119
+ 375:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 407              		.loc 1 375 4 view .LVU120
+ 375:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 408              		.loc 1 375 6 is_stmt 0 view .LVU121
+ 409 00c6 0DB1     		cbz	r5, .L21
+ 377:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 410              		.loc 1 377 5 is_stmt 1 view .LVU122
+ 377:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 411              		.loc 1 377 19 is_stmt 0 view .LVU123
+ 412 00c8 41F08061 		orr	r1, r1, #67108864
+ 413              	.LVL33:
+ 414              	.L21:
+ 381:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 415              		.loc 1 381 29 is_stmt 1 view .LVU124
+ 387:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 416              		.loc 1 387 4 view .LVU125
+ 417 00cc 069A     		ldr	r2, [sp, #24]
+ 418 00ce 2143     		orrs	r1, r1, r4
+ 419              	.LVL34:
+ 387:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 420              		.loc 1 387 4 is_stmt 0 view .LVU126
+ 421 00d0 381D     		adds	r0, r7, #4
+ 422              	.LVL35:
+ 387:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 423              		.loc 1 387 4 view .LVU127
+ 424 00d2 FFF7FEFF 		bl	vTaskPlaceOnUnorderedEventList
+ 425              	.LVL36:
+ 392:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 26
+
+
+ 426              		.loc 1 392 4 is_stmt 1 view .LVU128
+ 392:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 427              		.loc 1 392 13 is_stmt 0 view .LVU129
+ 428 00d6 4FF00008 		mov	r8, #0
+ 429              	.LVL37:
+ 392:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 430              		.loc 1 392 13 view .LVU130
+ 431 00da D5E7     		b	.L19
+ 432              	.LVL38:
+ 433              	.L27:
+ 368:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 434              		.loc 1 368 19 view .LVU131
+ 435 00dc 4FF08071 		mov	r1, #16777216
+ 436 00e0 F1E7     		b	.L20
+ 437              	.LVL39:
+ 438              	.L26:
+ 341:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 439              		.loc 1 341 17 view .LVU132
+ 440 00e2 0023     		movs	r3, #0
+ 441 00e4 0693     		str	r3, [sp, #24]
+ 442 00e6 CFE7     		b	.L19
+ 443              	.LVL40:
+ 444              	.L31:
+ 341:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 445              		.loc 1 341 17 view .LVU133
+ 446              	.LBE41:
+ 418:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 447              		.loc 1 418 4 is_stmt 1 view .LVU134
+ 448 00e8 FFF7FEFF 		bl	vPortEnterCritical
+ 449              	.LVL41:
+ 421:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 450              		.loc 1 421 5 view .LVU135
+ 421:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 451              		.loc 1 421 14 is_stmt 0 view .LVU136
+ 452 00ec D7F80080 		ldr	r8, [r7]
+ 453              	.LVL42:
+ 425:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				{
+ 454              		.loc 1 425 5 is_stmt 1 view .LVU137
+ 425:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				{
+ 455              		.loc 1 425 9 is_stmt 0 view .LVU138
+ 456 00f0 2A46     		mov	r2, r5
+ 457 00f2 2146     		mov	r1, r4
+ 458 00f4 4046     		mov	r0, r8
+ 459 00f6 FFF7FEFF 		bl	prvTestWaitCondition
+ 460              	.LVL43:
+ 425:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				{
+ 461              		.loc 1 425 7 discriminator 1 view .LVU139
+ 462 00fa 18B1     		cbz	r0, .L25
+ 427:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 					{
+ 463              		.loc 1 427 6 is_stmt 1 view .LVU140
+ 427:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 					{
+ 464              		.loc 1 427 8 is_stmt 0 view .LVU141
+ 465 00fc 16B1     		cbz	r6, .L25
+ 429:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 					}
+ 466              		.loc 1 429 7 is_stmt 1 view .LVU142
+ 429:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 					}
+ 467              		.loc 1 429 32 is_stmt 0 view .LVU143
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 27
+
+
+ 468 00fe 28EA0404 		bic	r4, r8, r4
+ 469              	.LVL44:
+ 429:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 					}
+ 470              		.loc 1 429 32 view .LVU144
+ 471 0102 3C60     		str	r4, [r7]
+ 472              	.L25:
+ 438:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				}
+ 473              		.loc 1 438 30 is_stmt 1 view .LVU145
+ 440:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 474              		.loc 1 440 5 view .LVU146
+ 475              	.LVL45:
+ 442:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 476              		.loc 1 442 4 view .LVU147
+ 477 0104 FFF7FEFF 		bl	vPortExitCritical
+ 478              	.LVL46:
+ 479 0108 D3E7     		b	.L24
+ 480              		.cfi_endproc
+ 481              	.LFE7:
+ 483              		.section	.text.xEventGroupClearBits,"ax",%progbits
+ 484              		.align	1
+ 485              		.global	xEventGroupClearBits
+ 486              		.syntax unified
+ 487              		.thumb
+ 488              		.thumb_func
+ 490              	xEventGroupClearBits:
+ 491              	.LVL47:
+ 492              	.LFB8:
+ 462:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventGroup_t *pxEventBits = xEventGroup;
+ 493              		.loc 1 462 1 view -0
+ 494              		.cfi_startproc
+ 495              		@ args = 0, pretend = 0, frame = 0
+ 496              		@ frame_needed = 0, uses_anonymous_args = 0
+ 463:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventBits_t uxReturn;
+ 497              		.loc 1 463 1 view .LVU149
+ 464:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 498              		.loc 1 464 1 view .LVU150
+ 468:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( ( uxBitsToClear & eventEVENT_BITS_CONTROL_BYTES ) == 0 );
+ 499              		.loc 1 468 2 view .LVU151
+ 500 0000 70B1     		cbz	r0, .L39
+ 462:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventGroup_t *pxEventBits = xEventGroup;
+ 501              		.loc 1 462 1 is_stmt 0 view .LVU152
+ 502 0002 70B5     		push	{r4, r5, r6, lr}
+ 503              	.LCFI4:
+ 504              		.cfi_def_cfa_offset 16
+ 505              		.cfi_offset 4, -16
+ 506              		.cfi_offset 5, -12
+ 507              		.cfi_offset 6, -8
+ 508              		.cfi_offset 14, -4
+ 509 0004 0C46     		mov	r4, r1
+ 510 0006 0546     		mov	r5, r0
+ 468:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( ( uxBitsToClear & eventEVENT_BITS_CONTROL_BYTES ) == 0 );
+ 511              		.loc 1 468 29 is_stmt 1 discriminator 2 view .LVU153
+ 469:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 512              		.loc 1 469 2 view .LVU154
+ 513 0008 B1F1807F 		cmp	r1, #16777216
+ 514 000c 11D3     		bcc	.L35
+ 469:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 28
+
+
+ 515              		.loc 1 469 2 discriminator 1 view .LVU155
+ 516              	.LBB42:
+ 517              	.LBI42:
+ 191:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** {
+ 518              		.loc 2 191 30 view .LVU156
+ 519              	.LBB43:
+ 193:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 520              		.loc 2 193 1 view .LVU157
+ 521              		.loc 2 195 2 view .LVU158
+ 522              		.syntax unified
+ 523              	@ 195 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h" 1
+ 524 000e 4FF05003 			mov r3, #80												
+ 525 0012 83F31188 		msr basepri, r3											
+ 526 0016 BFF36F8F 		isb														
+ 527 001a BFF34F8F 		dsb														
+ 528              	
+ 529              	@ 0 "" 2
+ 530              		.thumb
+ 531              		.syntax unified
+ 532              	.L36:
+ 533              	.LBE43:
+ 534              	.LBE42:
+ 469:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 535              		.loc 1 469 2 discriminator 3 view .LVU159
+ 469:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 536              		.loc 1 469 2 discriminator 3 view .LVU160
+ 537 001e FEE7     		b	.L36
+ 538              	.L39:
+ 539              	.LCFI5:
+ 540              		.cfi_def_cfa_offset 0
+ 541              		.cfi_restore 4
+ 542              		.cfi_restore 5
+ 543              		.cfi_restore 6
+ 544              		.cfi_restore 14
+ 468:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( ( uxBitsToClear & eventEVENT_BITS_CONTROL_BYTES ) == 0 );
+ 545              		.loc 1 468 2 discriminator 1 view .LVU161
+ 546              	.LBB44:
+ 547              	.LBI44:
+ 191:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** {
+ 548              		.loc 2 191 30 view .LVU162
+ 549              	.LBB45:
+ 193:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 550              		.loc 2 193 1 view .LVU163
+ 551              		.loc 2 195 2 view .LVU164
+ 552              		.syntax unified
+ 553              	@ 195 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h" 1
+ 554 0020 4FF05003 			mov r3, #80												
+ 555 0024 83F31188 		msr basepri, r3											
+ 556 0028 BFF36F8F 		isb														
+ 557 002c BFF34F8F 		dsb														
+ 558              	
+ 559              	@ 0 "" 2
+ 560              		.thumb
+ 561              		.syntax unified
+ 562              	.L34:
+ 563              	.LBE45:
+ 564              	.LBE44:
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 29
+
+
+ 468:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( ( uxBitsToClear & eventEVENT_BITS_CONTROL_BYTES ) == 0 );
+ 565              		.loc 1 468 2 discriminator 3 view .LVU165
+ 468:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( ( uxBitsToClear & eventEVENT_BITS_CONTROL_BYTES ) == 0 );
+ 566              		.loc 1 468 2 discriminator 3 view .LVU166
+ 567 0030 FEE7     		b	.L34
+ 568              	.L35:
+ 569              	.LCFI6:
+ 570              		.cfi_def_cfa_offset 16
+ 571              		.cfi_offset 4, -16
+ 572              		.cfi_offset 5, -12
+ 573              		.cfi_offset 6, -8
+ 574              		.cfi_offset 14, -4
+ 469:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 575              		.loc 1 469 72 discriminator 2 view .LVU167
+ 471:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	{
+ 576              		.loc 1 471 2 view .LVU168
+ 577 0032 FFF7FEFF 		bl	vPortEnterCritical
+ 578              	.LVL48:
+ 473:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 579              		.loc 1 473 60 view .LVU169
+ 477:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 580              		.loc 1 477 3 view .LVU170
+ 477:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 581              		.loc 1 477 12 is_stmt 0 view .LVU171
+ 582 0036 2E68     		ldr	r6, [r5]
+ 583              	.LVL49:
+ 480:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 584              		.loc 1 480 3 is_stmt 1 view .LVU172
+ 480:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 585              		.loc 1 480 28 is_stmt 0 view .LVU173
+ 586 0038 26EA0404 		bic	r4, r6, r4
+ 587              	.LVL50:
+ 480:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 588              		.loc 1 480 28 view .LVU174
+ 589 003c 2C60     		str	r4, [r5]
+ 482:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 590              		.loc 1 482 2 is_stmt 1 view .LVU175
+ 591 003e FFF7FEFF 		bl	vPortExitCritical
+ 592              	.LVL51:
+ 484:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** }
+ 593              		.loc 1 484 2 view .LVU176
+ 485:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*-----------------------------------------------------------*/
+ 594              		.loc 1 485 1 is_stmt 0 view .LVU177
+ 595 0042 3046     		mov	r0, r6
+ 596 0044 70BD     		pop	{r4, r5, r6, pc}
+ 485:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*-----------------------------------------------------------*/
+ 597              		.loc 1 485 1 view .LVU178
+ 598              		.cfi_endproc
+ 599              	.LFE8:
+ 601              		.section	.text.xEventGroupGetBitsFromISR,"ax",%progbits
+ 602              		.align	1
+ 603              		.global	xEventGroupGetBitsFromISR
+ 604              		.syntax unified
+ 605              		.thumb
+ 606              		.thumb_func
+ 608              	xEventGroupGetBitsFromISR:
+ 609              	.LVL52:
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 30
+
+
+ 610              	.LFB9:
+ 504:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** UBaseType_t uxSavedInterruptStatus;
+ 611              		.loc 1 504 1 is_stmt 1 view -0
+ 612              		.cfi_startproc
+ 613              		@ args = 0, pretend = 0, frame = 0
+ 614              		@ frame_needed = 0, uses_anonymous_args = 0
+ 615              		@ link register save eliminated.
+ 505:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventGroup_t const * const pxEventBits = xEventGroup;
+ 616              		.loc 1 505 1 view .LVU180
+ 506:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventBits_t uxReturn;
+ 617              		.loc 1 506 1 view .LVU181
+ 507:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 618              		.loc 1 507 1 view .LVU182
+ 509:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	{
+ 619              		.loc 1 509 2 view .LVU183
+ 620              	.LBB46:
+ 621              	.LBI46:
+ 196:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	(
+ 197:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 		"	mov %0, %1												\n"	\
+ 198:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 		"	msr basepri, %0											\n" \
+ 199:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 		"	isb														\n" \
+ 200:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 		"	dsb														\n" \
+ 201:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 		:"=r" (ulNewBASEPRI) : "i" ( configMAX_SYSCALL_INTERRUPT_PRIORITY ) : "memory"
+ 202:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	);
+ 203:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** }
+ 204:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 205:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** /*-----------------------------------------------------------*/
+ 206:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 207:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** portFORCE_INLINE static uint32_t ulPortRaiseBASEPRI( void )
+ 622              		.loc 2 207 34 view .LVU184
+ 623              	.LBB47:
+ 208:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** {
+ 209:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** uint32_t ulOriginalBASEPRI, ulNewBASEPRI;
+ 624              		.loc 2 209 1 view .LVU185
+ 210:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 211:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	__asm volatile
+ 625              		.loc 2 211 2 view .LVU186
+ 626              		.syntax unified
+ 627              	@ 211 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h" 1
+ 628 0000 EFF31183 			mrs r3, basepri											
+ 629 0004 4FF05002 		mov r2, #80												
+ 630 0008 82F31188 		msr basepri, r2											
+ 631 000c BFF36F8F 		isb														
+ 632 0010 BFF34F8F 		dsb														
+ 633              	
+ 634              	@ 0 "" 2
+ 635              	.LVL53:
+ 212:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	(
+ 213:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 		"	mrs %0, basepri											\n" \
+ 214:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 		"	mov %1, %2												\n"	\
+ 215:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 		"	msr basepri, %1											\n" \
+ 216:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 		"	isb														\n" \
+ 217:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 		"	dsb														\n" \
+ 218:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 		:"=r" (ulOriginalBASEPRI), "=r" (ulNewBASEPRI) : "i" ( configMAX_SYSCALL_INTERRUPT_PRIORITY ) : "
+ 219:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	);
+ 220:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 221:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	/* This return will not be reached but is necessary to prevent compiler
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 31
+
+
+ 222:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	warnings. */
+ 223:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	return ulOriginalBASEPRI;
+ 636              		.loc 2 223 2 view .LVU187
+ 637              		.loc 2 223 2 is_stmt 0 view .LVU188
+ 638              		.thumb
+ 639              		.syntax unified
+ 640              	.LBE47:
+ 641              	.LBE46:
+ 511:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 642              		.loc 1 511 3 is_stmt 1 view .LVU189
+ 511:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 643              		.loc 1 511 12 is_stmt 0 view .LVU190
+ 644 0014 0068     		ldr	r0, [r0]
+ 645              	.LVL54:
+ 513:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 646              		.loc 1 513 2 is_stmt 1 view .LVU191
+ 647              	.LBB48:
+ 648              	.LBI48:
+ 224:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** }
+ 225:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** /*-----------------------------------------------------------*/
+ 226:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 227:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** portFORCE_INLINE static void vPortSetBASEPRI( uint32_t ulNewMaskValue )
+ 649              		.loc 2 227 30 view .LVU192
+ 650              	.LBB49:
+ 228:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** {
+ 229:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	__asm volatile
+ 651              		.loc 2 229 2 view .LVU193
+ 652              		.syntax unified
+ 653              	@ 229 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h" 1
+ 654 0016 83F31188 			msr basepri, r3	
+ 655              	@ 0 "" 2
+ 656              	.LVL55:
+ 657              		.loc 2 229 2 is_stmt 0 view .LVU194
+ 658              		.thumb
+ 659              		.syntax unified
+ 660              	.LBE49:
+ 661              	.LBE48:
+ 515:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** } /*lint !e818 EventGroupHandle_t is a typedef used in other functions to so can't be pointer to co
+ 662              		.loc 1 515 2 is_stmt 1 view .LVU195
+ 516:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*-----------------------------------------------------------*/
+ 663              		.loc 1 516 1 is_stmt 0 view .LVU196
+ 664 001a 7047     		bx	lr
+ 665              		.cfi_endproc
+ 666              	.LFE9:
+ 668              		.section	.text.xEventGroupSetBits,"ax",%progbits
+ 669              		.align	1
+ 670              		.global	xEventGroupSetBits
+ 671              		.syntax unified
+ 672              		.thumb
+ 673              		.thumb_func
+ 675              	xEventGroupSetBits:
+ 676              	.LVL56:
+ 677              	.LFB10:
+ 520:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** ListItem_t *pxListItem, *pxNext;
+ 678              		.loc 1 520 1 is_stmt 1 view -0
+ 679              		.cfi_startproc
+ 680              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 32
+
+
+ 681              		@ frame_needed = 0, uses_anonymous_args = 0
+ 520:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** ListItem_t *pxListItem, *pxNext;
+ 682              		.loc 1 520 1 is_stmt 0 view .LVU198
+ 683 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 684              	.LCFI7:
+ 685              		.cfi_def_cfa_offset 24
+ 686              		.cfi_offset 3, -24
+ 687              		.cfi_offset 4, -20
+ 688              		.cfi_offset 5, -16
+ 689              		.cfi_offset 6, -12
+ 690              		.cfi_offset 7, -8
+ 691              		.cfi_offset 14, -4
+ 521:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** ListItem_t const *pxListEnd;
+ 692              		.loc 1 521 1 is_stmt 1 view .LVU199
+ 522:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** List_t const * pxList;
+ 693              		.loc 1 522 1 view .LVU200
+ 523:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventBits_t uxBitsToClear = 0, uxBitsWaitedFor, uxControlBits;
+ 694              		.loc 1 523 1 view .LVU201
+ 524:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventGroup_t *pxEventBits = xEventGroup;
+ 695              		.loc 1 524 1 view .LVU202
+ 696              	.LVL57:
+ 525:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** BaseType_t xMatchFound = pdFALSE;
+ 697              		.loc 1 525 1 view .LVU203
+ 526:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 698              		.loc 1 526 1 view .LVU204
+ 530:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( ( uxBitsToSet & eventEVENT_BITS_CONTROL_BYTES ) == 0 );
+ 699              		.loc 1 530 2 view .LVU205
+ 700 0002 68B1     		cbz	r0, .L53
+ 701 0004 0D46     		mov	r5, r1
+ 702 0006 0446     		mov	r4, r0
+ 530:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( ( uxBitsToSet & eventEVENT_BITS_CONTROL_BYTES ) == 0 );
+ 703              		.loc 1 530 29 discriminator 2 view .LVU206
+ 531:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 704              		.loc 1 531 2 view .LVU207
+ 705 0008 B1F1807F 		cmp	r1, #16777216
+ 706 000c 11D3     		bcc	.L44
+ 531:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 707              		.loc 1 531 2 discriminator 1 view .LVU208
+ 708              	.LBB50:
+ 709              	.LBI50:
+ 191:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** {
+ 710              		.loc 2 191 30 view .LVU209
+ 711              	.LBB51:
+ 193:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 712              		.loc 2 193 1 view .LVU210
+ 195:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	(
+ 713              		.loc 2 195 2 view .LVU211
+ 714              		.syntax unified
+ 715              	@ 195 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h" 1
+ 716 000e 4FF05003 			mov r3, #80												
+ 717 0012 83F31188 		msr basepri, r3											
+ 718 0016 BFF36F8F 		isb														
+ 719 001a BFF34F8F 		dsb														
+ 720              	
+ 721              	@ 0 "" 2
+ 722              		.thumb
+ 723              		.syntax unified
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 33
+
+
+ 724              	.L45:
+ 725              	.LBE51:
+ 726              	.LBE50:
+ 531:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 727              		.loc 1 531 2 discriminator 3 view .LVU212
+ 531:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 728              		.loc 1 531 2 discriminator 3 view .LVU213
+ 729 001e FEE7     		b	.L45
+ 730              	.L53:
+ 530:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( ( uxBitsToSet & eventEVENT_BITS_CONTROL_BYTES ) == 0 );
+ 731              		.loc 1 530 2 discriminator 1 view .LVU214
+ 732              	.LBB52:
+ 733              	.LBI52:
+ 191:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** {
+ 734              		.loc 2 191 30 view .LVU215
+ 735              	.LBB53:
+ 193:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 736              		.loc 2 193 1 view .LVU216
+ 195:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	(
+ 737              		.loc 2 195 2 view .LVU217
+ 738              		.syntax unified
+ 739              	@ 195 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h" 1
+ 740 0020 4FF05003 			mov r3, #80												
+ 741 0024 83F31188 		msr basepri, r3											
+ 742 0028 BFF36F8F 		isb														
+ 743 002c BFF34F8F 		dsb														
+ 744              	
+ 745              	@ 0 "" 2
+ 746              		.thumb
+ 747              		.syntax unified
+ 748              	.L43:
+ 749              	.LBE53:
+ 750              	.LBE52:
+ 530:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( ( uxBitsToSet & eventEVENT_BITS_CONTROL_BYTES ) == 0 );
+ 751              		.loc 1 530 2 discriminator 3 view .LVU218
+ 530:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( ( uxBitsToSet & eventEVENT_BITS_CONTROL_BYTES ) == 0 );
+ 752              		.loc 1 530 2 discriminator 3 view .LVU219
+ 753 0030 FEE7     		b	.L43
+ 754              	.L44:
+ 531:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 755              		.loc 1 531 70 discriminator 2 view .LVU220
+ 533:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	pxListEnd = listGET_END_MARKER( pxList ); /*lint !e826 !e740 !e9087 The mini list structure is use
+ 756              		.loc 1 533 2 view .LVU221
+ 757              	.LVL58:
+ 534:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	vTaskSuspendAll();
+ 758              		.loc 1 534 2 view .LVU222
+ 534:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	vTaskSuspendAll();
+ 759              		.loc 1 534 12 is_stmt 0 view .LVU223
+ 760 0032 00F10C06 		add	r6, r0, #12
+ 761              	.LVL59:
+ 535:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	{
+ 762              		.loc 1 535 2 is_stmt 1 view .LVU224
+ 763 0036 FFF7FEFF 		bl	vTaskSuspendAll
+ 764              	.LVL60:
+ 537:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 765              		.loc 1 537 56 view .LVU225
+ 539:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 34
+
+
+ 766              		.loc 1 539 3 view .LVU226
+ 539:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 767              		.loc 1 539 14 is_stmt 0 view .LVU227
+ 768 003a 2069     		ldr	r0, [r4, #16]
+ 769              	.LVL61:
+ 542:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 770              		.loc 1 542 3 is_stmt 1 view .LVU228
+ 542:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 771              		.loc 1 542 14 is_stmt 0 view .LVU229
+ 772 003c 2368     		ldr	r3, [r4]
+ 542:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 773              		.loc 1 542 28 view .LVU230
+ 774 003e 2B43     		orrs	r3, r3, r5
+ 775 0040 2360     		str	r3, [r4]
+ 545:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 776              		.loc 1 545 3 is_stmt 1 view .LVU231
+ 524:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventGroup_t *pxEventBits = xEventGroup;
+ 777              		.loc 1 524 13 is_stmt 0 view .LVU232
+ 778 0042 0027     		movs	r7, #0
+ 545:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 779              		.loc 1 545 8 view .LVU233
+ 780 0044 0AE0     		b	.L46
+ 781              	.LVL62:
+ 782              	.L47:
+ 567:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 783              		.loc 1 567 9 is_stmt 1 view .LVU234
+ 567:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 784              		.loc 1 567 44 is_stmt 0 view .LVU235
+ 785 0046 2168     		ldr	r1, [r4]
+ 567:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 786              		.loc 1 567 11 view .LVU236
+ 787 0048 32EA0101 		bics	r1, r2, r1
+ 788 004c 05D1     		bne	.L49
+ 567:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 789              		.loc 1 567 11 view .LVU237
+ 790 004e 11E0     		b	.L48
+ 791              	.LVL63:
+ 792              	.L50:
+ 586:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				}
+ 793              		.loc 1 586 30 is_stmt 1 view .LVU238
+ 594:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 794              		.loc 1 594 5 view .LVU239
+ 594:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 795              		.loc 1 594 63 is_stmt 0 view .LVU240
+ 796 0050 2168     		ldr	r1, [r4]
+ 594:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 797              		.loc 1 594 5 view .LVU241
+ 798 0052 41F00071 		orr	r1, r1, #33554432
+ 799 0056 FFF7FEFF 		bl	vTaskRemoveFromUnorderedEventList
+ 800              	.LVL64:
+ 801              	.L49:
+ 520:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** ListItem_t *pxListItem, *pxNext;
+ 802              		.loc 1 520 1 view .LVU242
+ 803 005a 2846     		mov	r0, r5
+ 804              	.LVL65:
+ 805              	.L46:
+ 545:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 35
+
+
+ 806              		.loc 1 545 21 is_stmt 1 view .LVU243
+ 807 005c B042     		cmp	r0, r6
+ 808 005e 0ED0     		beq	.L54
+ 547:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			uxBitsWaitedFor = listGET_LIST_ITEM_VALUE( pxListItem );
+ 809              		.loc 1 547 4 view .LVU244
+ 547:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			uxBitsWaitedFor = listGET_LIST_ITEM_VALUE( pxListItem );
+ 810              		.loc 1 547 11 is_stmt 0 view .LVU245
+ 811 0060 4568     		ldr	r5, [r0, #4]
+ 812              	.LVL66:
+ 548:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			xMatchFound = pdFALSE;
+ 813              		.loc 1 548 4 is_stmt 1 view .LVU246
+ 548:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			xMatchFound = pdFALSE;
+ 814              		.loc 1 548 20 is_stmt 0 view .LVU247
+ 815 0062 0368     		ldr	r3, [r0]
+ 816              	.LVL67:
+ 549:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 817              		.loc 1 549 4 is_stmt 1 view .LVU248
+ 552:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			uxBitsWaitedFor &= ~eventEVENT_BITS_CONTROL_BYTES;
+ 818              		.loc 1 552 4 view .LVU249
+ 553:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 819              		.loc 1 553 4 view .LVU250
+ 553:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 820              		.loc 1 553 20 is_stmt 0 view .LVU251
+ 821 0064 23F07F42 		bic	r2, r3, #-16777216
+ 822              	.LVL68:
+ 555:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 823              		.loc 1 555 4 is_stmt 1 view .LVU252
+ 555:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 824              		.loc 1 555 6 is_stmt 0 view .LVU253
+ 825 0068 13F0806F 		tst	r3, #67108864
+ 826 006c EBD1     		bne	.L47
+ 558:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				{
+ 827              		.loc 1 558 5 is_stmt 1 view .LVU254
+ 558:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				{
+ 828              		.loc 1 558 40 is_stmt 0 view .LVU255
+ 829 006e 2168     		ldr	r1, [r4]
+ 558:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				{
+ 830              		.loc 1 558 7 view .LVU256
+ 831 0070 1142     		tst	r1, r2
+ 832 0072 F2D0     		beq	.L49
+ 833              	.L48:
+ 834              	.LVL69:
+ 580:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				{
+ 835              		.loc 1 580 5 is_stmt 1 view .LVU257
+ 580:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				{
+ 836              		.loc 1 580 7 is_stmt 0 view .LVU258
+ 837 0074 13F0807F 		tst	r3, #16777216
+ 838 0078 EAD0     		beq	.L50
+ 582:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				}
+ 839              		.loc 1 582 6 is_stmt 1 view .LVU259
+ 582:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				}
+ 840              		.loc 1 582 20 is_stmt 0 view .LVU260
+ 841 007a 1743     		orrs	r7, r7, r2
+ 842              	.LVL70:
+ 582:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				}
+ 843              		.loc 1 582 20 view .LVU261
+ 844 007c E8E7     		b	.L50
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 36
+
+
+ 845              	.LVL71:
+ 846              	.L54:
+ 605:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 847              		.loc 1 605 3 is_stmt 1 view .LVU262
+ 605:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 848              		.loc 1 605 14 is_stmt 0 view .LVU263
+ 849 007e 2368     		ldr	r3, [r4]
+ 605:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 850              		.loc 1 605 28 view .LVU264
+ 851 0080 23EA0703 		bic	r3, r3, r7
+ 852 0084 2360     		str	r3, [r4]
+ 607:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 853              		.loc 1 607 2 is_stmt 1 view .LVU265
+ 607:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 854              		.loc 1 607 11 is_stmt 0 view .LVU266
+ 855 0086 FFF7FEFF 		bl	xTaskResumeAll
+ 856              	.LVL72:
+ 609:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** }
+ 857              		.loc 1 609 2 is_stmt 1 view .LVU267
+ 610:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*-----------------------------------------------------------*/
+ 858              		.loc 1 610 1 is_stmt 0 view .LVU268
+ 859 008a 2068     		ldr	r0, [r4]
+ 860 008c F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 610:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*-----------------------------------------------------------*/
+ 861              		.loc 1 610 1 view .LVU269
+ 862              		.cfi_endproc
+ 863              	.LFE10:
+ 865              		.section	.text.xEventGroupSync,"ax",%progbits
+ 866              		.align	1
+ 867              		.global	xEventGroupSync
+ 868              		.syntax unified
+ 869              		.thumb
+ 870              		.thumb_func
+ 872              	xEventGroupSync:
+ 873              	.LVL73:
+ 874              	.LFB6:
+ 192:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventBits_t uxOriginalBitValue, uxReturn;
+ 875              		.loc 1 192 1 is_stmt 1 view -0
+ 876              		.cfi_startproc
+ 877              		@ args = 0, pretend = 0, frame = 0
+ 878              		@ frame_needed = 0, uses_anonymous_args = 0
+ 193:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventGroup_t *pxEventBits = xEventGroup;
+ 879              		.loc 1 193 1 view .LVU271
+ 194:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** BaseType_t xAlreadyYielded;
+ 880              		.loc 1 194 1 view .LVU272
+ 195:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** BaseType_t xTimeoutOccurred = pdFALSE;
+ 881              		.loc 1 195 1 view .LVU273
+ 196:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 882              		.loc 1 196 1 view .LVU274
+ 198:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( uxBitsToWaitFor != 0 );
+ 883              		.loc 1 198 2 view .LVU275
+ 884 0000 B2F1807F 		cmp	r2, #16777216
+ 885 0004 08D3     		bcc	.L56
+ 198:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( uxBitsToWaitFor != 0 );
+ 886              		.loc 1 198 2 discriminator 1 view .LVU276
+ 887              	.LBB54:
+ 888              	.LBI54:
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 37
+
+
+ 191:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** {
+ 889              		.loc 2 191 30 view .LVU277
+ 890              	.LBB55:
+ 193:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 891              		.loc 2 193 1 view .LVU278
+ 195:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	(
+ 892              		.loc 2 195 2 view .LVU279
+ 893              		.syntax unified
+ 894              	@ 195 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h" 1
+ 895 0006 4FF05003 			mov r3, #80												
+ 896 000a 83F31188 		msr basepri, r3											
+ 897 000e BFF36F8F 		isb														
+ 898 0012 BFF34F8F 		dsb														
+ 899              	
+ 900              	@ 0 "" 2
+ 901              	.LVL74:
+ 902              		.thumb
+ 903              		.syntax unified
+ 904              	.L57:
+ 195:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	(
+ 905              		.loc 2 195 2 is_stmt 0 view .LVU280
+ 906              	.LBE55:
+ 907              	.LBE54:
+ 198:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( uxBitsToWaitFor != 0 );
+ 908              		.loc 1 198 2 is_stmt 1 discriminator 3 view .LVU281
+ 198:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( uxBitsToWaitFor != 0 );
+ 909              		.loc 1 198 2 discriminator 3 view .LVU282
+ 910 0016 FEE7     		b	.L57
+ 911              	.LVL75:
+ 912              	.L56:
+ 192:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventBits_t uxOriginalBitValue, uxReturn;
+ 913              		.loc 1 192 1 is_stmt 0 view .LVU283
+ 914 0018 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 915              	.LCFI8:
+ 916              		.cfi_def_cfa_offset 24
+ 917              		.cfi_offset 4, -24
+ 918              		.cfi_offset 5, -20
+ 919              		.cfi_offset 6, -16
+ 920              		.cfi_offset 7, -12
+ 921              		.cfi_offset 8, -8
+ 922              		.cfi_offset 14, -4
+ 923 001c 0746     		mov	r7, r0
+ 924 001e 0D46     		mov	r5, r1
+ 925 0020 1446     		mov	r4, r2
+ 926 0022 1E46     		mov	r6, r3
+ 198:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	configASSERT( uxBitsToWaitFor != 0 );
+ 927              		.loc 1 198 74 is_stmt 1 discriminator 2 view .LVU284
+ 199:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#if ( ( INCLUDE_xTaskGetSchedulerState == 1 ) || ( configUSE_TIMERS == 1 ) )
+ 928              		.loc 1 199 2 view .LVU285
+ 929 0024 42B9     		cbnz	r2, .L58
+ 199:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#if ( ( INCLUDE_xTaskGetSchedulerState == 1 ) || ( configUSE_TIMERS == 1 ) )
+ 930              		.loc 1 199 2 discriminator 1 view .LVU286
+ 931              	.LBB56:
+ 932              	.LBI56:
+ 191:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** {
+ 933              		.loc 2 191 30 view .LVU287
+ 934              	.LBB57:
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 38
+
+
+ 193:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 935              		.loc 2 193 1 view .LVU288
+ 195:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	(
+ 936              		.loc 2 195 2 view .LVU289
+ 937              		.syntax unified
+ 938              	@ 195 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h" 1
+ 939 0026 4FF05003 			mov r3, #80												
+ 940 002a 83F31188 		msr basepri, r3											
+ 941 002e BFF36F8F 		isb														
+ 942 0032 BFF34F8F 		dsb														
+ 943              	
+ 944              	@ 0 "" 2
+ 945              	.LVL76:
+ 946              		.thumb
+ 947              		.syntax unified
+ 948              	.L59:
+ 195:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	(
+ 949              		.loc 2 195 2 is_stmt 0 view .LVU290
+ 950              	.LBE57:
+ 951              	.LBE56:
+ 199:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#if ( ( INCLUDE_xTaskGetSchedulerState == 1 ) || ( configUSE_TIMERS == 1 ) )
+ 952              		.loc 1 199 2 is_stmt 1 discriminator 3 view .LVU291
+ 199:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#if ( ( INCLUDE_xTaskGetSchedulerState == 1 ) || ( configUSE_TIMERS == 1 ) )
+ 953              		.loc 1 199 2 discriminator 3 view .LVU292
+ 954 0036 FEE7     		b	.L59
+ 955              	.LVL77:
+ 956              	.L58:
+ 199:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	#if ( ( INCLUDE_xTaskGetSchedulerState == 1 ) || ( configUSE_TIMERS == 1 ) )
+ 957              		.loc 1 199 38 discriminator 2 view .LVU293
+ 202:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 958              		.loc 1 202 3 view .LVU294
+ 959 0038 FFF7FEFF 		bl	xTaskGetSchedulerState
+ 960              	.LVL78:
+ 202:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 961              		.loc 1 202 3 is_stmt 0 discriminator 1 view .LVU295
+ 962 003c 48B9     		cbnz	r0, .L60
+ 202:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 963              		.loc 1 202 3 discriminator 2 view .LVU296
+ 964 003e 46B1     		cbz	r6, .L60
+ 202:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 965              		.loc 1 202 3 is_stmt 1 discriminator 7 view .LVU297
+ 966              	.LBB58:
+ 967              	.LBI58:
+ 191:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** {
+ 968              		.loc 2 191 30 view .LVU298
+ 969              	.LBB59:
+ 193:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 970              		.loc 2 193 1 view .LVU299
+ 195:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	(
+ 971              		.loc 2 195 2 view .LVU300
+ 972              		.syntax unified
+ 973              	@ 195 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h" 1
+ 974 0040 4FF05003 			mov r3, #80												
+ 975 0044 83F31188 		msr basepri, r3											
+ 976 0048 BFF36F8F 		isb														
+ 977 004c BFF34F8F 		dsb														
+ 978              	
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 39
+
+
+ 979              	@ 0 "" 2
+ 980              		.thumb
+ 981              		.syntax unified
+ 982              	.L61:
+ 983              	.LBE59:
+ 984              	.LBE58:
+ 202:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 985              		.loc 1 202 3 discriminator 9 view .LVU301
+ 202:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 986              		.loc 1 202 3 discriminator 9 view .LVU302
+ 987 0050 FEE7     		b	.L61
+ 988              	.L60:
+ 202:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 989              		.loc 1 202 104 discriminator 8 view .LVU303
+ 206:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	{
+ 990              		.loc 1 206 2 view .LVU304
+ 991 0052 FFF7FEFF 		bl	vTaskSuspendAll
+ 992              	.LVL79:
+ 208:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 993              		.loc 1 208 3 view .LVU305
+ 208:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 994              		.loc 1 208 22 is_stmt 0 view .LVU306
+ 995 0056 D7F80080 		ldr	r8, [r7]
+ 996              	.LVL80:
+ 210:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 997              		.loc 1 210 3 is_stmt 1 view .LVU307
+ 210:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 998              		.loc 1 210 12 is_stmt 0 view .LVU308
+ 999 005a 2946     		mov	r1, r5
+ 1000 005c 3846     		mov	r0, r7
+ 1001 005e FFF7FEFF 		bl	xEventGroupSetBits
+ 1002              	.LVL81:
+ 212:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 1003              		.loc 1 212 3 is_stmt 1 view .LVU309
+ 212:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 1004              		.loc 1 212 30 is_stmt 0 view .LVU310
+ 1005 0062 48EA0505 		orr	r5, r8, r5
+ 1006              	.LVL82:
+ 212:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 1007              		.loc 1 212 5 view .LVU311
+ 1008 0066 34EA0503 		bics	r3, r4, r5
+ 1009 006a 1AD0     		beq	.L71
+ 225:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 1010              		.loc 1 225 4 is_stmt 1 view .LVU312
+ 225:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 1011              		.loc 1 225 6 is_stmt 0 view .LVU313
+ 1012 006c FEB9     		cbnz	r6, .L72
+ 244:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				xTimeoutOccurred = pdTRUE;
+ 1013              		.loc 1 244 5 is_stmt 1 view .LVU314
+ 244:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				xTimeoutOccurred = pdTRUE;
+ 1014              		.loc 1 244 14 is_stmt 0 view .LVU315
+ 1015 006e 3D68     		ldr	r5, [r7]
+ 1016              	.LVL83:
+ 245:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 1017              		.loc 1 245 5 is_stmt 1 view .LVU316
+ 1018              	.L63:
+ 249:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 40
+
+
+ 1019              		.loc 1 249 2 view .LVU317
+ 249:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 1020              		.loc 1 249 20 is_stmt 0 view .LVU318
+ 1021 0070 FFF7FEFF 		bl	xTaskResumeAll
+ 1022              	.LVL84:
+ 251:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	{
+ 1023              		.loc 1 251 2 is_stmt 1 view .LVU319
+ 251:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	{
+ 1024              		.loc 1 251 4 is_stmt 0 view .LVU320
+ 1025 0074 96B1     		cbz	r6, .L55
+ 253:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 1026              		.loc 1 253 3 is_stmt 1 view .LVU321
+ 253:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 1027              		.loc 1 253 5 is_stmt 0 view .LVU322
+ 1028 0076 48B9     		cbnz	r0, .L66
+ 255:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 1029              		.loc 1 255 4 is_stmt 1 view .LVU323
+ 1030 0078 4FF0E023 		mov	r3, #-536813568
+ 1031 007c 4FF08052 		mov	r2, #268435456
+ 1032 0080 C3F8042D 		str	r2, [r3, #3332]
+ 255:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 1033              		.loc 1 255 4 view .LVU324
+ 1034              		.syntax unified
+ 1035              	@ 255 "Middlewares/Third_Party/FreeRTOS/Source/event_groups.c" 1
+ 1036 0084 BFF34F8F 		dsb
+ 1037              	@ 0 "" 2
+ 255:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 1038              		.loc 1 255 4 view .LVU325
+ 1039              	@ 255 "Middlewares/Third_Party/FreeRTOS/Source/event_groups.c" 1
+ 1040 0088 BFF36F8F 		isb
+ 1041              	@ 0 "" 2
+ 255:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 1042              		.loc 1 255 26 view .LVU326
+ 1043              		.thumb
+ 1044              		.syntax unified
+ 1045              	.L66:
+ 259:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 1046              		.loc 1 259 28 view .LVU327
+ 266:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 1047              		.loc 1 266 3 view .LVU328
+ 266:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 1048              		.loc 1 266 14 is_stmt 0 view .LVU329
+ 1049 008c FFF7FEFF 		bl	uxTaskResetEventItemValue
+ 1050              	.LVL85:
+ 266:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 1051              		.loc 1 266 14 view .LVU330
+ 1052 0090 0546     		mov	r5, r0
+ 1053              	.LVL86:
+ 268:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 1054              		.loc 1 268 3 is_stmt 1 view .LVU331
+ 268:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 1055              		.loc 1 268 5 is_stmt 0 view .LVU332
+ 1056 0092 10F0007F 		tst	r0, #33554432
+ 1057 0096 12D0     		beq	.L73
+ 1058              	.LVL87:
+ 1059              	.L67:
+ 295:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 41
+
+
+ 1060              		.loc 1 295 3 is_stmt 1 view .LVU333
+ 299:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 1061              		.loc 1 299 3 view .LVU334
+ 299:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	}
+ 1062              		.loc 1 299 12 is_stmt 0 view .LVU335
+ 1063 0098 25F07F45 		bic	r5, r5, #-16777216
+ 1064              	.LVL88:
+ 302:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 1065              		.loc 1 302 2 is_stmt 1 view .LVU336
+ 305:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 1066              		.loc 1 305 2 view .LVU337
+ 307:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** }
+ 1067              		.loc 1 307 2 view .LVU338
+ 1068              	.L55:
+ 308:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*-----------------------------------------------------------*/
+ 1069              		.loc 1 308 1 is_stmt 0 view .LVU339
+ 1070 009c 2846     		mov	r0, r5
+ 1071 009e BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1072              	.LVL89:
+ 1073              	.L71:
+ 215:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 1074              		.loc 1 215 4 is_stmt 1 view .LVU340
+ 219:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 1075              		.loc 1 219 4 view .LVU341
+ 219:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 1076              		.loc 1 219 15 is_stmt 0 view .LVU342
+ 1077 00a2 3B68     		ldr	r3, [r7]
+ 219:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 1078              		.loc 1 219 29 view .LVU343
+ 1079 00a4 23EA0403 		bic	r3, r3, r4
+ 1080 00a8 3B60     		str	r3, [r7]
+ 221:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 1081              		.loc 1 221 4 is_stmt 1 view .LVU344
+ 1082              	.LVL90:
+ 221:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 1083              		.loc 1 221 17 is_stmt 0 view .LVU345
+ 1084 00aa 0026     		movs	r6, #0
+ 1085 00ac E0E7     		b	.L63
+ 1086              	.LVL91:
+ 1087              	.L72:
+ 227:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 1088              		.loc 1 227 77 is_stmt 1 view .LVU346
+ 232:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 1089              		.loc 1 232 5 view .LVU347
+ 1090 00ae 3246     		mov	r2, r6
+ 1091 00b0 44F0A061 		orr	r1, r4, #83886080
+ 1092 00b4 381D     		adds	r0, r7, #4
+ 1093 00b6 FFF7FEFF 		bl	vTaskPlaceOnUnorderedEventList
+ 1094              	.LVL92:
+ 238:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 1095              		.loc 1 238 5 view .LVU348
+ 238:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			}
+ 1096              		.loc 1 238 14 is_stmt 0 view .LVU349
+ 1097 00ba 0025     		movs	r5, #0
+ 1098 00bc D8E7     		b	.L63
+ 1099              	.LVL93:
+ 1100              	.L73:
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 42
+
+
+ 271:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			{
+ 1101              		.loc 1 271 4 is_stmt 1 view .LVU350
+ 1102 00be FFF7FEFF 		bl	vPortEnterCritical
+ 1103              	.LVL94:
+ 273:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 1104              		.loc 1 273 5 view .LVU351
+ 273:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 1105              		.loc 1 273 14 is_stmt 0 view .LVU352
+ 1106 00c2 3D68     		ldr	r5, [r7]
+ 1107              	.LVL95:
+ 279:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				{
+ 1108              		.loc 1 279 5 is_stmt 1 view .LVU353
+ 279:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				{
+ 1109              		.loc 1 279 7 is_stmt 0 view .LVU354
+ 1110 00c4 34EA0503 		bics	r3, r4, r5
+ 1111 00c8 02D0     		beq	.L74
+ 1112              	.LVL96:
+ 1113              	.L68:
+ 285:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				}
+ 1114              		.loc 1 285 30 is_stmt 1 view .LVU355
+ 288:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 1115              		.loc 1 288 4 view .LVU356
+ 1116 00ca FFF7FEFF 		bl	vPortExitCritical
+ 1117              	.LVL97:
+ 290:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 1118              		.loc 1 290 4 view .LVU357
+ 290:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 1119              		.loc 1 290 4 is_stmt 0 view .LVU358
+ 1120 00ce E3E7     		b	.L67
+ 1121              	.LVL98:
+ 1122              	.L74:
+ 281:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				}
+ 1123              		.loc 1 281 6 is_stmt 1 view .LVU359
+ 281:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				}
+ 1124              		.loc 1 281 31 is_stmt 0 view .LVU360
+ 1125 00d0 25EA0404 		bic	r4, r5, r4
+ 1126              	.LVL99:
+ 281:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 				}
+ 1127              		.loc 1 281 31 view .LVU361
+ 1128 00d4 3C60     		str	r4, [r7]
+ 1129 00d6 F8E7     		b	.L68
+ 1130              		.cfi_endproc
+ 1131              	.LFE6:
+ 1133              		.section	.text.vEventGroupDelete,"ax",%progbits
+ 1134              		.align	1
+ 1135              		.global	vEventGroupDelete
+ 1136              		.syntax unified
+ 1137              		.thumb
+ 1138              		.thumb_func
+ 1140              	vEventGroupDelete:
+ 1141              	.LVL100:
+ 1142              	.LFB11:
+ 614:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventGroup_t *pxEventBits = xEventGroup;
+ 1143              		.loc 1 614 1 is_stmt 1 view -0
+ 1144              		.cfi_startproc
+ 1145              		@ args = 0, pretend = 0, frame = 0
+ 1146              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 43
+
+
+ 614:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** EventGroup_t *pxEventBits = xEventGroup;
+ 1147              		.loc 1 614 1 is_stmt 0 view .LVU363
+ 1148 0000 10B5     		push	{r4, lr}
+ 1149              	.LCFI9:
+ 1150              		.cfi_def_cfa_offset 8
+ 1151              		.cfi_offset 4, -8
+ 1152              		.cfi_offset 14, -4
+ 1153 0002 0446     		mov	r4, r0
+ 615:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** const List_t *pxTasksWaitingForBits = &( pxEventBits->xTasksWaitingForBits );
+ 1154              		.loc 1 615 1 is_stmt 1 view .LVU364
+ 1155              	.LVL101:
+ 616:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 1156              		.loc 1 616 1 view .LVU365
+ 618:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	{
+ 1157              		.loc 1 618 2 view .LVU366
+ 1158 0004 FFF7FEFF 		bl	vTaskSuspendAll
+ 1159              	.LVL102:
+ 620:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 
+ 1160              		.loc 1 620 41 view .LVU367
+ 622:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 1161              		.loc 1 622 3 view .LVU368
+ 1162              	.L76:
+ 622:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 1163              		.loc 1 622 59 view .LVU369
+ 622:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 1164              		.loc 1 622 10 is_stmt 0 view .LVU370
+ 1165 0008 6368     		ldr	r3, [r4, #4]
+ 622:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		{
+ 1166              		.loc 1 622 59 view .LVU371
+ 1167 000a 93B1     		cbz	r3, .L81
+ 626:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			vTaskRemoveFromUnorderedEventList( pxTasksWaitingForBits->xListEnd.pxNext, eventUNBLOCKED_DUE_TO
+ 1168              		.loc 1 626 4 is_stmt 1 view .LVU372
+ 1169 000c 2069     		ldr	r0, [r4, #16]
+ 1170 000e 04F10C03 		add	r3, r4, #12
+ 1171 0012 9842     		cmp	r0, r3
+ 1172 0014 04D0     		beq	.L82
+ 626:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			vTaskRemoveFromUnorderedEventList( pxTasksWaitingForBits->xListEnd.pxNext, eventUNBLOCKED_DUE_TO
+ 1173              		.loc 1 626 121 discriminator 2 view .LVU373
+ 627:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 1174              		.loc 1 627 4 view .LVU374
+ 1175 0016 4FF00071 		mov	r1, #33554432
+ 1176 001a FFF7FEFF 		bl	vTaskRemoveFromUnorderedEventList
+ 1177              	.LVL103:
+ 1178 001e F3E7     		b	.L76
+ 1179              	.L82:
+ 626:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			vTaskRemoveFromUnorderedEventList( pxTasksWaitingForBits->xListEnd.pxNext, eventUNBLOCKED_DUE_TO
+ 1180              		.loc 1 626 4 discriminator 1 view .LVU375
+ 1181              	.LBB60:
+ 1182              	.LBI60:
+ 191:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** {
+ 1183              		.loc 2 191 30 view .LVU376
+ 1184              	.LBB61:
+ 193:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 
+ 1185              		.loc 2 193 1 view .LVU377
+ 195:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h **** 	(
+ 1186              		.loc 2 195 2 view .LVU378
+ 1187              		.syntax unified
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 44
+
+
+ 1188              	@ 195 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h" 1
+ 1189 0020 4FF05003 			mov r3, #80												
+ 1190 0024 83F31188 		msr basepri, r3											
+ 1191 0028 BFF36F8F 		isb														
+ 1192 002c BFF34F8F 		dsb														
+ 1193              	
+ 1194              	@ 0 "" 2
+ 1195              		.thumb
+ 1196              		.syntax unified
+ 1197              	.L78:
+ 1198              	.LBE61:
+ 1199              	.LBE60:
+ 626:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			vTaskRemoveFromUnorderedEventList( pxTasksWaitingForBits->xListEnd.pxNext, eventUNBLOCKED_DUE_TO
+ 1200              		.loc 1 626 4 discriminator 3 view .LVU379
+ 626:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 			vTaskRemoveFromUnorderedEventList( pxTasksWaitingForBits->xListEnd.pxNext, eventUNBLOCKED_DUE_TO
+ 1201              		.loc 1 626 4 discriminator 3 view .LVU380
+ 1202 0030 FEE7     		b	.L78
+ 1203              	.L81:
+ 634:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 		}
+ 1204              		.loc 1 634 4 view .LVU381
+ 1205 0032 2046     		mov	r0, r4
+ 1206 0034 FFF7FEFF 		bl	vPortFree
+ 1207              	.LVL104:
+ 651:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** }
+ 1208              		.loc 1 651 2 view .LVU382
+ 651:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** }
+ 1209              		.loc 1 651 11 is_stmt 0 view .LVU383
+ 1210 0038 FFF7FEFF 		bl	xTaskResumeAll
+ 1211              	.LVL105:
+ 652:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*-----------------------------------------------------------*/
+ 1212              		.loc 1 652 1 view .LVU384
+ 1213 003c 10BD     		pop	{r4, pc}
+ 652:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*-----------------------------------------------------------*/
+ 1214              		.loc 1 652 1 view .LVU385
+ 1215              		.cfi_endproc
+ 1216              	.LFE11:
+ 1218              		.section	.text.vEventGroupSetBitsCallback,"ax",%progbits
+ 1219              		.align	1
+ 1220              		.global	vEventGroupSetBitsCallback
+ 1221              		.syntax unified
+ 1222              		.thumb
+ 1223              		.thumb_func
+ 1225              	vEventGroupSetBitsCallback:
+ 1226              	.LVL106:
+ 1227              	.LFB12:
+ 658:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	( void ) xEventGroupSetBits( pvEventGroup, ( EventBits_t ) ulBitsToSet ); /*lint !e9079 Can't avoi
+ 1228              		.loc 1 658 1 is_stmt 1 view -0
+ 1229              		.cfi_startproc
+ 1230              		@ args = 0, pretend = 0, frame = 0
+ 1231              		@ frame_needed = 0, uses_anonymous_args = 0
+ 658:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	( void ) xEventGroupSetBits( pvEventGroup, ( EventBits_t ) ulBitsToSet ); /*lint !e9079 Can't avoi
+ 1232              		.loc 1 658 1 is_stmt 0 view .LVU387
+ 1233 0000 08B5     		push	{r3, lr}
+ 1234              	.LCFI10:
+ 1235              		.cfi_def_cfa_offset 8
+ 1236              		.cfi_offset 3, -8
+ 1237              		.cfi_offset 14, -4
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 45
+
+
+ 659:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** }
+ 1238              		.loc 1 659 2 is_stmt 1 view .LVU388
+ 659:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** }
+ 1239              		.loc 1 659 11 is_stmt 0 view .LVU389
+ 1240 0002 FFF7FEFF 		bl	xEventGroupSetBits
+ 1241              	.LVL107:
+ 660:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*-----------------------------------------------------------*/
+ 1242              		.loc 1 660 1 view .LVU390
+ 1243 0006 08BD     		pop	{r3, pc}
+ 1244              		.cfi_endproc
+ 1245              	.LFE12:
+ 1247              		.section	.text.vEventGroupClearBitsCallback,"ax",%progbits
+ 1248              		.align	1
+ 1249              		.global	vEventGroupClearBitsCallback
+ 1250              		.syntax unified
+ 1251              		.thumb
+ 1252              		.thumb_func
+ 1254              	vEventGroupClearBitsCallback:
+ 1255              	.LVL108:
+ 1256              	.LFB13:
+ 666:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	( void ) xEventGroupClearBits( pvEventGroup, ( EventBits_t ) ulBitsToClear ); /*lint !e9079 Can't 
+ 1257              		.loc 1 666 1 is_stmt 1 view -0
+ 1258              		.cfi_startproc
+ 1259              		@ args = 0, pretend = 0, frame = 0
+ 1260              		@ frame_needed = 0, uses_anonymous_args = 0
+ 666:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** 	( void ) xEventGroupClearBits( pvEventGroup, ( EventBits_t ) ulBitsToClear ); /*lint !e9079 Can't 
+ 1261              		.loc 1 666 1 is_stmt 0 view .LVU392
+ 1262 0000 08B5     		push	{r3, lr}
+ 1263              	.LCFI11:
+ 1264              		.cfi_def_cfa_offset 8
+ 1265              		.cfi_offset 3, -8
+ 1266              		.cfi_offset 14, -4
+ 667:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** }
+ 1267              		.loc 1 667 2 is_stmt 1 view .LVU393
+ 667:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** }
+ 1268              		.loc 1 667 11 is_stmt 0 view .LVU394
+ 1269 0002 FFF7FEFF 		bl	xEventGroupClearBits
+ 1270              	.LVL109:
+ 668:Middlewares/Third_Party/FreeRTOS/Source/event_groups.c **** /*-----------------------------------------------------------*/
+ 1271              		.loc 1 668 1 view .LVU395
+ 1272 0006 08BD     		pop	{r3, pc}
+ 1273              		.cfi_endproc
+ 1274              	.LFE13:
+ 1276              		.text
+ 1277              	.Letext0:
+ 1278              		.file 3 "E:/VSCODE_TOOL/Arm_gnu/13.3 rel1/lib/gcc/arm-none-eabi/13.3.1/include/stddef.h"
+ 1279              		.file 4 "E:/VSCODE_TOOL/Arm_gnu/13.3 rel1/arm-none-eabi/include/machine/_default_types.h"
+ 1280              		.file 5 "E:/VSCODE_TOOL/Arm_gnu/13.3 rel1/arm-none-eabi/include/sys/_stdint.h"
+ 1281              		.file 6 "Middlewares/Third_Party/FreeRTOS/Source/include/list.h"
+ 1282              		.file 7 "Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h"
+ 1283              		.file 8 "Middlewares/Third_Party/FreeRTOS/Source/include/portable.h"
+ 1284              		.file 9 "Middlewares/Third_Party/FreeRTOS/Source/include/task.h"
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s 			page 46
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 event_groups.c
+C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s:21     .text.prvTestWaitCondition:00000000 $t
+C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s:26     .text.prvTestWaitCondition:00000000 prvTestWaitCondition
+C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s:80     .text.xEventGroupCreate:00000000 $t
+C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s:86     .text.xEventGroupCreate:00000000 xEventGroupCreate
+C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s:127    .text.xEventGroupWaitBits:00000000 $t
+C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s:133    .text.xEventGroupWaitBits:00000000 xEventGroupWaitBits
+C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s:484    .text.xEventGroupClearBits:00000000 $t
+C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s:490    .text.xEventGroupClearBits:00000000 xEventGroupClearBits
+C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s:602    .text.xEventGroupGetBitsFromISR:00000000 $t
+C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s:608    .text.xEventGroupGetBitsFromISR:00000000 xEventGroupGetBitsFromISR
+C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s:669    .text.xEventGroupSetBits:00000000 $t
+C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s:675    .text.xEventGroupSetBits:00000000 xEventGroupSetBits
+C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s:866    .text.xEventGroupSync:00000000 $t
+C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s:872    .text.xEventGroupSync:00000000 xEventGroupSync
+C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s:1134   .text.vEventGroupDelete:00000000 $t
+C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s:1140   .text.vEventGroupDelete:00000000 vEventGroupDelete
+C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s:1219   .text.vEventGroupSetBitsCallback:00000000 $t
+C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s:1225   .text.vEventGroupSetBitsCallback:00000000 vEventGroupSetBitsCallback
+C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s:1248   .text.vEventGroupClearBitsCallback:00000000 $t
+C:\Users\BIRDs\AppData\Local\Temp\ccsua7Yw.s:1254   .text.vEventGroupClearBitsCallback:00000000 vEventGroupClearBitsCallback
+
+UNDEFINED SYMBOLS
+pvPortMalloc
+vListInitialise
+xTaskGetSchedulerState
+vTaskSuspendAll
+xTaskResumeAll
+uxTaskResetEventItemValue
+vTaskPlaceOnUnorderedEventList
+vPortEnterCritical
+vPortExitCritical
+vTaskRemoveFromUnorderedEventList
+vPortFree

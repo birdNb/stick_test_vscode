@@ -1,0 +1,520 @@
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"app_freertos.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "Core/Src/app_freertos.c"
+  20              		.section	.text.StartDefaultTask,"ax",%progbits
+  21              		.align	1
+  22              		.global	StartDefaultTask
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	StartDefaultTask:
+  28              	.LFB335:
+   1:Core/Src/app_freertos.c **** /* USER CODE BEGIN Header */
+   2:Core/Src/app_freertos.c **** /**
+   3:Core/Src/app_freertos.c ****   ******************************************************************************
+   4:Core/Src/app_freertos.c ****   * File Name          : app_freertos.c
+   5:Core/Src/app_freertos.c ****   * Description        : Code for freertos applications
+   6:Core/Src/app_freertos.c ****   ******************************************************************************
+   7:Core/Src/app_freertos.c ****   * @attention
+   8:Core/Src/app_freertos.c ****   *
+   9:Core/Src/app_freertos.c ****   * Copyright (c) 2025 STMicroelectronics.
+  10:Core/Src/app_freertos.c ****   * All rights reserved.
+  11:Core/Src/app_freertos.c ****   *
+  12:Core/Src/app_freertos.c ****   * This software is licensed under terms that can be found in the LICENSE file
+  13:Core/Src/app_freertos.c ****   * in the root directory of this software component.
+  14:Core/Src/app_freertos.c ****   * If no LICENSE file comes with this software, it is provided AS-IS.
+  15:Core/Src/app_freertos.c ****   *
+  16:Core/Src/app_freertos.c ****   ******************************************************************************
+  17:Core/Src/app_freertos.c ****   */
+  18:Core/Src/app_freertos.c **** /* USER CODE END Header */
+  19:Core/Src/app_freertos.c **** 
+  20:Core/Src/app_freertos.c **** /* Includes ------------------------------------------------------------------*/
+  21:Core/Src/app_freertos.c **** #include "FreeRTOS.h"
+  22:Core/Src/app_freertos.c **** #include "task.h"
+  23:Core/Src/app_freertos.c **** #include "main.h"
+  24:Core/Src/app_freertos.c **** #include "cmsis_os.h"
+  25:Core/Src/app_freertos.c **** 
+  26:Core/Src/app_freertos.c **** /* Private includes ----------------------------------------------------------*/
+  27:Core/Src/app_freertos.c **** /* USER CODE BEGIN Includes */
+  28:Core/Src/app_freertos.c **** 
+  29:Core/Src/app_freertos.c **** /* USER CODE END Includes */
+  30:Core/Src/app_freertos.c **** 
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s 			page 2
+
+
+  31:Core/Src/app_freertos.c **** /* Private typedef -----------------------------------------------------------*/
+  32:Core/Src/app_freertos.c **** /* USER CODE BEGIN PTD */
+  33:Core/Src/app_freertos.c **** 
+  34:Core/Src/app_freertos.c **** /* USER CODE END PTD */
+  35:Core/Src/app_freertos.c **** 
+  36:Core/Src/app_freertos.c **** /* Private define ------------------------------------------------------------*/
+  37:Core/Src/app_freertos.c **** /* USER CODE BEGIN PD */
+  38:Core/Src/app_freertos.c **** 
+  39:Core/Src/app_freertos.c **** /* USER CODE END PD */
+  40:Core/Src/app_freertos.c **** 
+  41:Core/Src/app_freertos.c **** /* Private macro -------------------------------------------------------------*/
+  42:Core/Src/app_freertos.c **** /* USER CODE BEGIN PM */
+  43:Core/Src/app_freertos.c **** 
+  44:Core/Src/app_freertos.c **** /* USER CODE END PM */
+  45:Core/Src/app_freertos.c **** 
+  46:Core/Src/app_freertos.c **** /* Private variables ---------------------------------------------------------*/
+  47:Core/Src/app_freertos.c **** /* USER CODE BEGIN Variables */
+  48:Core/Src/app_freertos.c **** 
+  49:Core/Src/app_freertos.c **** /* USER CODE END Variables */
+  50:Core/Src/app_freertos.c **** osThreadId defaultTaskHandle;
+  51:Core/Src/app_freertos.c **** osThreadId LcdShowHandle;
+  52:Core/Src/app_freertos.c **** osThreadId Send_Rec_msgHandle;
+  53:Core/Src/app_freertos.c **** osSemaphoreId myBinarySem01Handle;
+  54:Core/Src/app_freertos.c **** 
+  55:Core/Src/app_freertos.c **** /* Private function prototypes -----------------------------------------------*/
+  56:Core/Src/app_freertos.c **** /* USER CODE BEGIN FunctionPrototypes */
+  57:Core/Src/app_freertos.c **** 
+  58:Core/Src/app_freertos.c **** /* USER CODE END FunctionPrototypes */
+  59:Core/Src/app_freertos.c **** 
+  60:Core/Src/app_freertos.c **** void StartDefaultTask(void const * argument);
+  61:Core/Src/app_freertos.c **** void LcdShow_02(void const * argument);
+  62:Core/Src/app_freertos.c **** void Send_Rec_msg_03(void const * argument);
+  63:Core/Src/app_freertos.c **** 
+  64:Core/Src/app_freertos.c **** void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
+  65:Core/Src/app_freertos.c **** 
+  66:Core/Src/app_freertos.c **** /**
+  67:Core/Src/app_freertos.c ****   * @brief  FreeRTOS initialization
+  68:Core/Src/app_freertos.c ****   * @param  None
+  69:Core/Src/app_freertos.c ****   * @retval None
+  70:Core/Src/app_freertos.c ****   */
+  71:Core/Src/app_freertos.c **** void MX_FREERTOS_Init(void) {
+  72:Core/Src/app_freertos.c ****   /* USER CODE BEGIN Init */
+  73:Core/Src/app_freertos.c **** 
+  74:Core/Src/app_freertos.c ****   /* USER CODE END Init */
+  75:Core/Src/app_freertos.c **** 
+  76:Core/Src/app_freertos.c ****   /* USER CODE BEGIN RTOS_MUTEX */
+  77:Core/Src/app_freertos.c ****   /* add mutexes, ... */
+  78:Core/Src/app_freertos.c ****   /* USER CODE END RTOS_MUTEX */
+  79:Core/Src/app_freertos.c **** 
+  80:Core/Src/app_freertos.c ****   /* Create the semaphores(s) */
+  81:Core/Src/app_freertos.c ****   /* definition and creation of myBinarySem01 */
+  82:Core/Src/app_freertos.c ****   osSemaphoreDef(myBinarySem01);
+  83:Core/Src/app_freertos.c ****   myBinarySem01Handle = osSemaphoreCreate(osSemaphore(myBinarySem01), 1);
+  84:Core/Src/app_freertos.c **** 
+  85:Core/Src/app_freertos.c ****   /* USER CODE BEGIN RTOS_SEMAPHORES */
+  86:Core/Src/app_freertos.c ****   /* add semaphores, ... */
+  87:Core/Src/app_freertos.c ****   /* USER CODE END RTOS_SEMAPHORES */
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s 			page 3
+
+
+  88:Core/Src/app_freertos.c **** 
+  89:Core/Src/app_freertos.c ****   /* USER CODE BEGIN RTOS_TIMERS */
+  90:Core/Src/app_freertos.c ****   /* start timers, add new ones, ... */
+  91:Core/Src/app_freertos.c ****   /* USER CODE END RTOS_TIMERS */
+  92:Core/Src/app_freertos.c **** 
+  93:Core/Src/app_freertos.c ****   /* USER CODE BEGIN RTOS_QUEUES */
+  94:Core/Src/app_freertos.c ****   /* add queues, ... */
+  95:Core/Src/app_freertos.c ****   /* USER CODE END RTOS_QUEUES */
+  96:Core/Src/app_freertos.c **** 
+  97:Core/Src/app_freertos.c ****   /* Create the thread(s) */
+  98:Core/Src/app_freertos.c ****   /* definition and creation of defaultTask */
+  99:Core/Src/app_freertos.c ****   osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+ 100:Core/Src/app_freertos.c ****   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+ 101:Core/Src/app_freertos.c **** 
+ 102:Core/Src/app_freertos.c ****   /* definition and creation of LcdShow */
+ 103:Core/Src/app_freertos.c ****   osThreadDef(LcdShow, LcdShow_02, osPriorityIdle, 0, 128);
+ 104:Core/Src/app_freertos.c ****   LcdShowHandle = osThreadCreate(osThread(LcdShow), NULL);
+ 105:Core/Src/app_freertos.c **** 
+ 106:Core/Src/app_freertos.c ****   /* definition and creation of Send_Rec_msg */
+ 107:Core/Src/app_freertos.c ****   osThreadDef(Send_Rec_msg, Send_Rec_msg_03, osPriorityIdle, 0, 128);
+ 108:Core/Src/app_freertos.c ****   Send_Rec_msgHandle = osThreadCreate(osThread(Send_Rec_msg), NULL);
+ 109:Core/Src/app_freertos.c **** 
+ 110:Core/Src/app_freertos.c ****   /* USER CODE BEGIN RTOS_THREADS */
+ 111:Core/Src/app_freertos.c ****   /* add threads, ... */
+ 112:Core/Src/app_freertos.c ****   /* USER CODE END RTOS_THREADS */
+ 113:Core/Src/app_freertos.c **** 
+ 114:Core/Src/app_freertos.c **** }
+ 115:Core/Src/app_freertos.c **** 
+ 116:Core/Src/app_freertos.c **** /* USER CODE BEGIN Header_StartDefaultTask */
+ 117:Core/Src/app_freertos.c **** /**
+ 118:Core/Src/app_freertos.c ****   * @brief  Function implementing the defaultTask thread.
+ 119:Core/Src/app_freertos.c ****   * @param  argument: Not used
+ 120:Core/Src/app_freertos.c ****   * @retval None
+ 121:Core/Src/app_freertos.c ****   */
+ 122:Core/Src/app_freertos.c **** /* USER CODE END Header_StartDefaultTask */
+ 123:Core/Src/app_freertos.c **** void StartDefaultTask(void const * argument)
+ 124:Core/Src/app_freertos.c **** {
+  29              		.loc 1 124 1 view -0
+  30              		.cfi_startproc
+  31              		@ Volatile: function does not return.
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              	.LVL0:
+  35              		.loc 1 124 1 is_stmt 0 view .LVU1
+  36 0000 08B5     		push	{r3, lr}
+  37              	.LCFI0:
+  38              		.cfi_def_cfa_offset 8
+  39              		.cfi_offset 3, -8
+  40              		.cfi_offset 14, -4
+  41              	.LVL1:
+  42              	.L2:
+ 125:Core/Src/app_freertos.c ****   /* USER CODE BEGIN StartDefaultTask */
+ 126:Core/Src/app_freertos.c ****   /* Infinite loop */
+ 127:Core/Src/app_freertos.c ****   for(;;)
+  43              		.loc 1 127 3 is_stmt 1 view .LVU2
+ 128:Core/Src/app_freertos.c ****   {
+ 129:Core/Src/app_freertos.c ****     osDelay(1);
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s 			page 4
+
+
+  44              		.loc 1 129 5 discriminator 1 view .LVU3
+  45 0002 0120     		movs	r0, #1
+  46 0004 FFF7FEFF 		bl	osDelay
+  47              	.LVL2:
+ 127:Core/Src/app_freertos.c ****   {
+  48              		.loc 1 127 3 view .LVU4
+  49 0008 FBE7     		b	.L2
+  50              		.cfi_endproc
+  51              	.LFE335:
+  53              		.section	.text.LcdShow_02,"ax",%progbits
+  54              		.align	1
+  55              		.global	LcdShow_02
+  56              		.syntax unified
+  57              		.thumb
+  58              		.thumb_func
+  60              	LcdShow_02:
+  61              	.LFB336:
+ 130:Core/Src/app_freertos.c ****   }
+ 131:Core/Src/app_freertos.c ****   /* USER CODE END StartDefaultTask */
+ 132:Core/Src/app_freertos.c **** }
+ 133:Core/Src/app_freertos.c **** 
+ 134:Core/Src/app_freertos.c **** /* USER CODE BEGIN Header_LcdShow_02 */
+ 135:Core/Src/app_freertos.c **** /**
+ 136:Core/Src/app_freertos.c **** * @brief Function implementing the LcdShow thread.
+ 137:Core/Src/app_freertos.c **** * @param argument: Not used
+ 138:Core/Src/app_freertos.c **** * @retval None
+ 139:Core/Src/app_freertos.c **** */
+ 140:Core/Src/app_freertos.c **** /* USER CODE END Header_LcdShow_02 */
+ 141:Core/Src/app_freertos.c **** void LcdShow_02(void const * argument)
+ 142:Core/Src/app_freertos.c **** {
+  62              		.loc 1 142 1 view -0
+  63              		.cfi_startproc
+  64              		@ Volatile: function does not return.
+  65              		@ args = 0, pretend = 0, frame = 0
+  66              		@ frame_needed = 0, uses_anonymous_args = 0
+  67              	.LVL3:
+  68              		.loc 1 142 1 is_stmt 0 view .LVU6
+  69 0000 08B5     		push	{r3, lr}
+  70              	.LCFI1:
+  71              		.cfi_def_cfa_offset 8
+  72              		.cfi_offset 3, -8
+  73              		.cfi_offset 14, -4
+  74              	.LVL4:
+  75              	.L5:
+ 143:Core/Src/app_freertos.c ****   /* USER CODE BEGIN LcdShow_02 */
+ 144:Core/Src/app_freertos.c ****   /* Infinite loop */
+ 145:Core/Src/app_freertos.c ****   for(;;)
+  76              		.loc 1 145 3 is_stmt 1 view .LVU7
+ 146:Core/Src/app_freertos.c ****   {
+ 147:Core/Src/app_freertos.c ****     osDelay(1);
+  77              		.loc 1 147 5 discriminator 1 view .LVU8
+  78 0002 0120     		movs	r0, #1
+  79 0004 FFF7FEFF 		bl	osDelay
+  80              	.LVL5:
+ 145:Core/Src/app_freertos.c ****   {
+  81              		.loc 1 145 3 view .LVU9
+  82 0008 FBE7     		b	.L5
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s 			page 5
+
+
+  83              		.cfi_endproc
+  84              	.LFE336:
+  86              		.section	.text.Send_Rec_msg_03,"ax",%progbits
+  87              		.align	1
+  88              		.global	Send_Rec_msg_03
+  89              		.syntax unified
+  90              		.thumb
+  91              		.thumb_func
+  93              	Send_Rec_msg_03:
+  94              	.LFB337:
+ 148:Core/Src/app_freertos.c ****   }
+ 149:Core/Src/app_freertos.c ****   /* USER CODE END LcdShow_02 */
+ 150:Core/Src/app_freertos.c **** }
+ 151:Core/Src/app_freertos.c **** 
+ 152:Core/Src/app_freertos.c **** /* USER CODE BEGIN Header_Send_Rec_msg_03 */
+ 153:Core/Src/app_freertos.c **** /**
+ 154:Core/Src/app_freertos.c **** * @brief Function implementing the Send_Rec_msg thread.
+ 155:Core/Src/app_freertos.c **** * @param argument: Not used
+ 156:Core/Src/app_freertos.c **** * @retval None
+ 157:Core/Src/app_freertos.c **** */
+ 158:Core/Src/app_freertos.c **** /* USER CODE END Header_Send_Rec_msg_03 */
+ 159:Core/Src/app_freertos.c **** void Send_Rec_msg_03(void const * argument)
+ 160:Core/Src/app_freertos.c **** {
+  95              		.loc 1 160 1 view -0
+  96              		.cfi_startproc
+  97              		@ Volatile: function does not return.
+  98              		@ args = 0, pretend = 0, frame = 0
+  99              		@ frame_needed = 0, uses_anonymous_args = 0
+ 100              	.LVL6:
+ 101              		.loc 1 160 1 is_stmt 0 view .LVU11
+ 102 0000 08B5     		push	{r3, lr}
+ 103              	.LCFI2:
+ 104              		.cfi_def_cfa_offset 8
+ 105              		.cfi_offset 3, -8
+ 106              		.cfi_offset 14, -4
+ 107              	.LVL7:
+ 108              	.L8:
+ 161:Core/Src/app_freertos.c ****   /* USER CODE BEGIN Send_Rec_msg_03 */
+ 162:Core/Src/app_freertos.c ****   /* Infinite loop */
+ 163:Core/Src/app_freertos.c ****   for(;;)
+ 109              		.loc 1 163 3 is_stmt 1 view .LVU12
+ 164:Core/Src/app_freertos.c ****   {
+ 165:Core/Src/app_freertos.c ****     osDelay(1);
+ 110              		.loc 1 165 5 discriminator 1 view .LVU13
+ 111 0002 0120     		movs	r0, #1
+ 112 0004 FFF7FEFF 		bl	osDelay
+ 113              	.LVL8:
+ 163:Core/Src/app_freertos.c ****   {
+ 114              		.loc 1 163 3 view .LVU14
+ 115 0008 FBE7     		b	.L8
+ 116              		.cfi_endproc
+ 117              	.LFE337:
+ 119              		.section	.text.MX_FREERTOS_Init,"ax",%progbits
+ 120              		.align	1
+ 121              		.global	MX_FREERTOS_Init
+ 122              		.syntax unified
+ 123              		.thumb
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s 			page 6
+
+
+ 124              		.thumb_func
+ 126              	MX_FREERTOS_Init:
+ 127              	.LFB334:
+  71:Core/Src/app_freertos.c ****   /* USER CODE BEGIN Init */
+ 128              		.loc 1 71 29 view -0
+ 129              		.cfi_startproc
+ 130              		@ args = 0, pretend = 0, frame = 64
+ 131              		@ frame_needed = 0, uses_anonymous_args = 0
+ 132 0000 30B5     		push	{r4, r5, lr}
+ 133              	.LCFI3:
+ 134              		.cfi_def_cfa_offset 12
+ 135              		.cfi_offset 4, -12
+ 136              		.cfi_offset 5, -8
+ 137              		.cfi_offset 14, -4
+ 138 0002 91B0     		sub	sp, sp, #68
+ 139              	.LCFI4:
+ 140              		.cfi_def_cfa_offset 80
+  82:Core/Src/app_freertos.c ****   myBinarySem01Handle = osSemaphoreCreate(osSemaphore(myBinarySem01), 1);
+ 141              		.loc 1 82 3 view .LVU16
+ 142 0004 0025     		movs	r5, #0
+ 143 0006 0F95     		str	r5, [sp, #60]
+  83:Core/Src/app_freertos.c **** 
+ 144              		.loc 1 83 3 view .LVU17
+  83:Core/Src/app_freertos.c **** 
+ 145              		.loc 1 83 25 is_stmt 0 view .LVU18
+ 146 0008 0121     		movs	r1, #1
+ 147 000a 0FA8     		add	r0, sp, #60
+ 148 000c FFF7FEFF 		bl	osSemaphoreCreate
+ 149              	.LVL9:
+  83:Core/Src/app_freertos.c **** 
+ 150              		.loc 1 83 23 discriminator 1 view .LVU19
+ 151 0010 1C4B     		ldr	r3, .L12
+ 152 0012 1860     		str	r0, [r3]
+  99:Core/Src/app_freertos.c ****   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+ 153              		.loc 1 99 3 is_stmt 1 view .LVU20
+ 154 0014 1C4C     		ldr	r4, .L12+4
+ 155 0016 0DF1280C 		add	ip, sp, #40
+ 156 001a A646     		mov	lr, r4
+ 157 001c BEE80F00 		ldmia	lr!, {r0, r1, r2, r3}
+ 158 0020 ACE80F00 		stmia	ip!, {r0, r1, r2, r3}
+ 159 0024 DEF80030 		ldr	r3, [lr]
+ 160 0028 CCF80030 		str	r3, [ip]
+ 100:Core/Src/app_freertos.c **** 
+ 161              		.loc 1 100 3 view .LVU21
+ 100:Core/Src/app_freertos.c **** 
+ 162              		.loc 1 100 23 is_stmt 0 view .LVU22
+ 163 002c 2946     		mov	r1, r5
+ 164 002e 0AA8     		add	r0, sp, #40
+ 165 0030 FFF7FEFF 		bl	osThreadCreate
+ 166              	.LVL10:
+ 100:Core/Src/app_freertos.c **** 
+ 167              		.loc 1 100 21 discriminator 1 view .LVU23
+ 168 0034 154B     		ldr	r3, .L12+8
+ 169 0036 1860     		str	r0, [r3]
+ 103:Core/Src/app_freertos.c ****   LcdShowHandle = osThreadCreate(osThread(LcdShow), NULL);
+ 170              		.loc 1 103 3 is_stmt 1 view .LVU24
+ 171 0038 0DF1140C 		add	ip, sp, #20
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s 			page 7
+
+
+ 172 003c 04F1140E 		add	lr, r4, #20
+ 173 0040 BEE80F00 		ldmia	lr!, {r0, r1, r2, r3}
+ 174 0044 ACE80F00 		stmia	ip!, {r0, r1, r2, r3}
+ 175 0048 DEF80030 		ldr	r3, [lr]
+ 176 004c CCF80030 		str	r3, [ip]
+ 104:Core/Src/app_freertos.c **** 
+ 177              		.loc 1 104 3 view .LVU25
+ 104:Core/Src/app_freertos.c **** 
+ 178              		.loc 1 104 19 is_stmt 0 view .LVU26
+ 179 0050 2946     		mov	r1, r5
+ 180 0052 05A8     		add	r0, sp, #20
+ 181 0054 FFF7FEFF 		bl	osThreadCreate
+ 182              	.LVL11:
+ 104:Core/Src/app_freertos.c **** 
+ 183              		.loc 1 104 17 discriminator 1 view .LVU27
+ 184 0058 0D4B     		ldr	r3, .L12+12
+ 185 005a 1860     		str	r0, [r3]
+ 107:Core/Src/app_freertos.c ****   Send_Rec_msgHandle = osThreadCreate(osThread(Send_Rec_msg), NULL);
+ 186              		.loc 1 107 3 is_stmt 1 view .LVU28
+ 187 005c EE46     		mov	lr, sp
+ 188 005e 04F1280C 		add	ip, r4, #40
+ 189 0062 BCE80F00 		ldmia	ip!, {r0, r1, r2, r3}
+ 190 0066 AEE80F00 		stmia	lr!, {r0, r1, r2, r3}
+ 191 006a DCF80030 		ldr	r3, [ip]
+ 192 006e CEF80030 		str	r3, [lr]
+ 108:Core/Src/app_freertos.c **** 
+ 193              		.loc 1 108 3 view .LVU29
+ 108:Core/Src/app_freertos.c **** 
+ 194              		.loc 1 108 24 is_stmt 0 view .LVU30
+ 195 0072 2946     		mov	r1, r5
+ 196 0074 6846     		mov	r0, sp
+ 197 0076 FFF7FEFF 		bl	osThreadCreate
+ 198              	.LVL12:
+ 108:Core/Src/app_freertos.c **** 
+ 199              		.loc 1 108 22 discriminator 1 view .LVU31
+ 200 007a 064B     		ldr	r3, .L12+16
+ 201 007c 1860     		str	r0, [r3]
+ 114:Core/Src/app_freertos.c **** 
+ 202              		.loc 1 114 1 view .LVU32
+ 203 007e 11B0     		add	sp, sp, #68
+ 204              	.LCFI5:
+ 205              		.cfi_def_cfa_offset 12
+ 206              		@ sp needed
+ 207 0080 30BD     		pop	{r4, r5, pc}
+ 208              	.L13:
+ 209 0082 00BF     		.align	2
+ 210              	.L12:
+ 211 0084 00000000 		.word	myBinarySem01Handle
+ 212 0088 00000000 		.word	.LANCHOR0
+ 213 008c 00000000 		.word	defaultTaskHandle
+ 214 0090 00000000 		.word	LcdShowHandle
+ 215 0094 00000000 		.word	Send_Rec_msgHandle
+ 216              		.cfi_endproc
+ 217              	.LFE334:
+ 219              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 220              		.align	2
+ 221              	.LC4:
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s 			page 8
+
+
+ 222 0000 53656E64 		.ascii	"Send_Rec_msg\000"
+ 222      5F526563 
+ 222      5F6D7367 
+ 222      00
+ 223 000d 000000   		.align	2
+ 224              	.LC2:
+ 225 0010 4C636453 		.ascii	"LcdShow\000"
+ 225      686F7700 
+ 226              		.align	2
+ 227              	.LC0:
+ 228 0018 64656661 		.ascii	"defaultTask\000"
+ 228      756C7454 
+ 228      61736B00 
+ 229              		.global	myBinarySem01Handle
+ 230              		.section	.bss.myBinarySem01Handle,"aw",%nobits
+ 231              		.align	2
+ 234              	myBinarySem01Handle:
+ 235 0000 00000000 		.space	4
+ 236              		.global	Send_Rec_msgHandle
+ 237              		.section	.bss.Send_Rec_msgHandle,"aw",%nobits
+ 238              		.align	2
+ 241              	Send_Rec_msgHandle:
+ 242 0000 00000000 		.space	4
+ 243              		.global	LcdShowHandle
+ 244              		.section	.bss.LcdShowHandle,"aw",%nobits
+ 245              		.align	2
+ 248              	LcdShowHandle:
+ 249 0000 00000000 		.space	4
+ 250              		.global	defaultTaskHandle
+ 251              		.section	.bss.defaultTaskHandle,"aw",%nobits
+ 252              		.align	2
+ 255              	defaultTaskHandle:
+ 256 0000 00000000 		.space	4
+ 257              		.section	.rodata
+ 258              		.align	2
+ 259              		.set	.LANCHOR0,. + 0
+ 260              	.LC6:
+ 261 0000 18000000 		.word	.LC0
+ 262 0004 00000000 		.word	StartDefaultTask
+ 263 0008 0000     		.short	0
+ 264 000a 0000     		.space	2
+ 265 000c 00000000 		.word	0
+ 266 0010 80000000 		.word	128
+ 267              	.LC7:
+ 268 0014 10000000 		.word	.LC2
+ 269 0018 00000000 		.word	LcdShow_02
+ 270 001c FDFF     		.short	-3
+ 271 001e 0000     		.space	2
+ 272 0020 00000000 		.word	0
+ 273 0024 80000000 		.word	128
+ 274              	.LC8:
+ 275 0028 00000000 		.word	.LC4
+ 276 002c 00000000 		.word	Send_Rec_msg_03
+ 277 0030 FDFF     		.short	-3
+ 278 0032 0000     		.space	2
+ 279 0034 00000000 		.word	0
+ 280 0038 80000000 		.word	128
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s 			page 9
+
+
+ 281              		.text
+ 282              	.Letext0:
+ 283              		.file 2 "E:/VSCODE_TOOL/Arm_gnu/13.3 rel1/arm-none-eabi/include/machine/_default_types.h"
+ 284              		.file 3 "E:/VSCODE_TOOL/Arm_gnu/13.3 rel1/arm-none-eabi/include/sys/_stdint.h"
+ 285              		.file 4 "Middlewares/Third_Party/FreeRTOS/Source/include/task.h"
+ 286              		.file 5 "Middlewares/Third_Party/FreeRTOS/Source/include/queue.h"
+ 287              		.file 6 "Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h"
+ 288              		.file 7 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h"
+ARM GAS  C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 app_freertos.c
+C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s:21     .text.StartDefaultTask:00000000 $t
+C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s:27     .text.StartDefaultTask:00000000 StartDefaultTask
+C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s:54     .text.LcdShow_02:00000000 $t
+C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s:60     .text.LcdShow_02:00000000 LcdShow_02
+C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s:87     .text.Send_Rec_msg_03:00000000 $t
+C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s:93     .text.Send_Rec_msg_03:00000000 Send_Rec_msg_03
+C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s:120    .text.MX_FREERTOS_Init:00000000 $t
+C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s:126    .text.MX_FREERTOS_Init:00000000 MX_FREERTOS_Init
+C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s:211    .text.MX_FREERTOS_Init:00000084 $d
+C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s:234    .bss.myBinarySem01Handle:00000000 myBinarySem01Handle
+C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s:255    .bss.defaultTaskHandle:00000000 defaultTaskHandle
+C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s:248    .bss.LcdShowHandle:00000000 LcdShowHandle
+C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s:241    .bss.Send_Rec_msgHandle:00000000 Send_Rec_msgHandle
+C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s:220    .rodata.str1.4:00000000 $d
+C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s:231    .bss.myBinarySem01Handle:00000000 $d
+C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s:238    .bss.Send_Rec_msgHandle:00000000 $d
+C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s:245    .bss.LcdShowHandle:00000000 $d
+C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s:252    .bss.defaultTaskHandle:00000000 $d
+C:\Users\BIRDs\AppData\Local\Temp\ccbuATbg.s:258    .rodata:00000000 $d
+
+UNDEFINED SYMBOLS
+osDelay
+osSemaphoreCreate
+osThreadCreate
