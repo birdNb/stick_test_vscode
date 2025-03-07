@@ -5,7 +5,7 @@
             // 头文件路径
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/USER",
+                "${workspaceFolder}/USER/**",
                 "Middlewares/Third_Party/FreeRTOS/Source/include/**",
                 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/**"
             ],

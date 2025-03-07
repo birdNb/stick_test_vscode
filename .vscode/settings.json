@@ -3,6 +3,8 @@
     "files.associations": {
         "freertos.h": "c",
         "cmsis_os.h": "c",
-        "main.h": "c"
+        "main.h": "c",
+        "adc.h": "c",
+        "head.h": "c"
     }
 }
